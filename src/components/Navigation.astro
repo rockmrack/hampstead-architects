@@ -8,12 +8,12 @@ const navItems = [
 ];
 ---
 
-<nav class="fixed top-0 left-0 w-full z-50 bg-off-white/80 backdrop-blur-md" aria-label="Main navigation">
-  <div class="section-padding flex items-center justify-between">
+<nav class="fixed top-0 left-0 w-full z-50 bg-off-white border-b border-charcoal/5" aria-label="Main navigation">
+  <div class="px-6 md:px-12 py-4 md:py-6 flex items-center justify-between max-w-screen-2xl mx-auto">
     <!-- Logo -->
     <a href="/" class="flex flex-col leading-none hover:opacity-70 transition-opacity" aria-label="Hampstead Architects - Home">
-      <span class="font-serif text-xl tracking-tight">Hampstead</span>
-      <span class="font-serif text-xl tracking-tight">Architects</span>
+      <span class="font-serif text-lg md:text-xl tracking-tight">Hampstead</span>
+      <span class="font-serif text-lg md:text-xl tracking-tight">Architects</span>
     </a>
 
     <!-- Hamburger Menu Button -->
@@ -42,7 +42,7 @@ const navItems = [
           <li>
             <a
               href={item.href}
-              class="menu-link font-serif text-5xl md:text-6xl lg:text-7xl font-light text-charcoal hover:text-oxidized-copper transition-colors duration-300 block"
+              class="menu-link font-serif text-3xl md:text-4xl lg:text-5xl font-light text-charcoal hover:text-oxidized-copper transition-colors duration-300 block"
             >
               {item.label}
             </a>
