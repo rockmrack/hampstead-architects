@@ -1,0 +1,184 @@
+---
+interface Props {
+  images: string[];
+  alt?: string;
+}
+
+const { images, alt = "Project image" } = Astro.props;
+---
+
+<div class="lightbox-gallery">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+    {images.map((image, index) => (
+      <button
+        type="button"
+        class="lightbox-trigger group relative overflow-hidden img-framed aspect-square cursor-pointer"
+        data-index={index}
+        aria-label={`View image ${index + 1} of ${images.length}`}
+      >
+        <img
+          src={image}
+          alt={`${alt} ${index + 1}`}
+          class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/10 transition-colors duration-500 flex items-center justify-center">
+          <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-sm font-medium tracking-wide">
+            VIEW
+          </span>
+        </div>
+      </button>
+    ))}
+  </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox-modal" class="fixed inset-0 bg-charcoal/95 backdrop-blur-md z-[100] opacity-0 pointer-events-none transition-opacity duration-500" role="dialog" aria-modal="true" aria-label="Image gallery">
+  <button
+    id="lightbox-close"
+    class="absolute top-6 right-6 z-10 text-white/80 hover:text-white transition-colors duration-300 text-4xl leading-none w-12 h-12 flex items-center justify-center"
+    aria-label="Close gallery"
+  >
+    ×
+  </button>
+
+  <!-- Navigation -->
+  <button
+    id="lightbox-prev"
+    class="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-white/60 hover:text-white transition-all duration-300 text-5xl leading-none w-16 h-16 flex items-center justify-center hover:scale-110"
+    aria-label="Previous image"
+  >
+    ‹
+  </button>
+  <button
+    id="lightbox-next"
+    class="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-white/60 hover:text-white transition-all duration-300 text-5xl leading-none w-16 h-16 flex items-center justify-center hover:scale-110"
+    aria-label="Next image"
+  >
+    ›
+  </button>
+
+  <!-- Image Container -->
+  <div class="w-full h-full flex items-center justify-center p-8 md:p-16">
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+      class="max-w-full max-h-full object-contain transform transition-all duration-500"
+    />
+  </div>
+
+  <!-- Counter -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-sm tracking-wider">
+    <span id="lightbox-counter">1 / 1</span>
+  </div>
+</div>
+
+<script is:inline define:vars={{ images }}>
+  let currentIndex = 0;
+  const modal = document.getElementById('lightbox-modal');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const counter = document.getElementById('lightbox-counter');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  const triggers = document.querySelectorAll('.lightbox-trigger');
+
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
+    if (modal) {
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeLightbox() {
+    if (modal) {
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function updateLightbox() {
+    if (lightboxImage && counter) {
+      lightboxImage.src = images[currentIndex];
+      lightboxImage.alt = `Image ${currentIndex + 1} of ${images.length}`;
+      counter.textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateLightbox();
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateLightbox();
+  }
+
+  // Event listeners
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const index = parseInt(trigger.getAttribute('data-index') || '0');
+      openLightbox(index);
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  prevBtn?.addEventListener('click', prevImage);
+  nextBtn?.addEventListener('click', nextImage);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (modal && !modal.classList.contains('pointer-events-none')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    }
+  });
+
+  // Click outside to close
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeLightbox();
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  modal?.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  modal?.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) nextImage();
+    if (touchEndX > touchStartX + swipeThreshold) prevImage();
+  }
+</script>
+
+<style>
+  #lightbox-image {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>

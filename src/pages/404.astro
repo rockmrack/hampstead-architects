@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found - Hampstead Architects"
+  description="The page you're looking for doesn't exist."
+>
+  <section class="section-padding min-h-[70vh] flex items-center justify-center">
+    <div class="text-center max-w-2xl mx-auto px-6">
+      <!-- Error Number -->
+      <div class="mb-8">
+        <span class="font-serif text-[12rem] md:text-[16rem] leading-none text-oxidized-copper/20 block">
+          404
+        </span>
+      </div>
+
+      <!-- Message -->
+      <h1 class="text-4xl md:text-5xl font-serif font-light mb-6">
+        Page Not Found
+      </h1>
+      <p class="text-xl text-charcoal/70 mb-12 leading-relaxed">
+        The page you're looking for seems to have been relocated—much like a well-planned renovation.
+      </p>
+
+      <!-- Navigation Options -->
+      <div class="space-y-4">
+        <div>
+          <a href="/" class="btn-primary">
+            Return Home
+          </a>
+        </div>
+        <div class="flex flex-wrap justify-center gap-6 text-sm">
+          <a href="/portfolio" class="text-charcoal hover:text-oxidized-copper transition-colors">
+            View Portfolio
+          </a>
+          <a href="/process" class="text-charcoal hover:text-oxidized-copper transition-colors">
+            Our Process
+          </a>
+          <a href="/contact" class="text-charcoal hover:text-oxidized-copper transition-colors">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Subtle floating animation for the 404 number */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  section > div > div:first-child {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    section > div > div:first-child {
+      animation: none;
+    }
+  }
+</style>

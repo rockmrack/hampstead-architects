@@ -1,0 +1,242 @@
+---
+const testimonials = [
+  {
+    quote: "The team at Hampstead Architects understood exactly what we needed for our Grade II listed restoration. They matched us with an architect who specialized in Georgian properties, and the result exceeded our expectations. Camden Planning approved on the first submission.",
+    author: "Sarah & James Mitchell",
+    project: "Frognal Restoration, NW3",
+    year: "2023"
+  },
+  {
+    quote: "Navigating party wall agreements for our basement excavation was incredibly complex. Hampstead Architects assembled a team of specialists who handled everything seamlessly. Our neighbors were kept informed, and there were zero disputes.",
+    author: "Dr. Rebecca Thornton",
+    project: "Primrose Hill Basement, NW1",
+    year: "2023"
+  },
+  {
+    quote: "We wanted contemporary architecture in the heart of Hampstead Village Conservation Area. Everyone said it was impossible. Hampstead Architects found an architect who achieved what others said couldn't be done - unanimous planning approval for a modern design.",
+    author: "Marcus Chen",
+    project: "Hampstead Village Mews, NW3",
+    year: "2024"
+  },
+  {
+    quote: "The Hampstead Garden Suburb Trust is notoriously strict. Our previous architect's application was rejected twice. Hampstead Architects connected us with an Arts & Crafts specialist, and we won a Design Award. The difference in expertise was night and day.",
+    author: "Eleanor & David Hart",
+    project: "Garden Suburb Restoration, NW11",
+    year: "2022"
+  },
+  {
+    quote: "From concept to completion, the curation model works brilliantly. We had one point of contact who coordinated our architect, structural engineer, and the build team. No communication gaps, no delays, no stress.",
+    author: "Olivia Pemberton",
+    project: "Swiss Cottage Penthouse, NW3",
+    year: "2023"
+  }
+];
+---
+
+<section class="section-padding bg-warm-stone overflow-hidden" aria-labelledby="testimonials-heading">
+  <div class="max-w-5xl mx-auto px-6 md:px-12">
+    <h2 id="testimonials-heading" class="text-center mb-16">
+      Client Experiences
+    </h2>
+
+    <div class="testimonials-carousel relative">
+      <!-- Carousel Container -->
+      <div class="overflow-hidden">
+        <div id="testimonials-track" class="flex transition-transform duration-700 ease-out">
+          {testimonials.map((testimonial, index) => (
+            <div class="testimonial-slide flex-shrink-0 w-full px-4 md:px-8" data-index={index}>
+              <div class="text-center max-w-3xl mx-auto">
+                <!-- Quote -->
+                <blockquote class="mb-8">
+                  <svg class="w-12 h-12 text-oxidized-copper/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  <p class="text-xl md:text-2xl leading-relaxed text-charcoal/90 font-light italic">
+                    "{testimonial.quote}"
+                  </p>
+                </blockquote>
+
+                <!-- Author -->
+                <div class="space-y-1">
+                  <p class="font-medium text-lg text-charcoal">
+                    {testimonial.author}
+                  </p>
+                  <p class="text-sm text-charcoal/60 tracking-wide">
+                    {testimonial.project} · {testimonial.year}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div class="flex justify-center items-center gap-2 mt-12">
+        {testimonials.map((_, index) => (
+          <button
+            type="button"
+            class="testimonial-dot w-2 h-2 rounded-full bg-charcoal/20 transition-all duration-300 hover:bg-charcoal/40"
+            data-index={index}
+            aria-label={`Go to testimonial ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      <!-- Arrow Navigation (Desktop) -->
+      <button
+        id="testimonial-prev"
+        class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 items-center justify-center text-charcoal/40 hover:text-charcoal transition-all duration-300 text-4xl hover:scale-110"
+        aria-label="Previous testimonial"
+      >
+        ‹
+      </button>
+      <button
+        id="testimonial-next"
+        class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 items-center justify-center text-charcoal/40 hover:text-charcoal transition-all duration-300 text-4xl hover:scale-110"
+        aria-label="Next testimonial"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentSlide = 0;
+  const track = document.getElementById('testimonials-track');
+  const dots = document.querySelectorAll('.testimonial-dot');
+  const prevBtn = document.getElementById('testimonial-prev');
+  const nextBtn = document.getElementById('testimonial-next');
+  const totalSlides = dots.length;
+  let autoplayInterval: number;
+
+  function updateCarousel() {
+    if (track) {
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // Update dots
+    dots.forEach((dot, index) => {
+      if (index === currentSlide) {
+        dot.classList.remove('bg-charcoal/20', 'w-2');
+        dot.classList.add('bg-charcoal', 'w-8');
+      } else {
+        dot.classList.remove('bg-charcoal', 'w-8');
+        dot.classList.add('bg-charcoal/20', 'w-2');
+      }
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  }
+
+  function goToSlide(index: number) {
+    currentSlide = index;
+    updateCarousel();
+    resetAutoplay();
+  }
+
+  function startAutoplay() {
+    autoplayInterval = window.setInterval(nextSlide, 6000);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+  }
+
+  function resetAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+
+  // Event listeners
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const index = parseInt(dot.getAttribute('data-index') || '0');
+      goToSlide(index);
+    });
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    prevSlide();
+    resetAutoplay();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    nextSlide();
+    resetAutoplay();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const testimonialsSection = document.querySelector('.testimonials-carousel');
+    if (testimonialsSection && isInViewport(testimonialsSection)) {
+      if (e.key === 'ArrowRight') {
+        nextSlide();
+        resetAutoplay();
+      }
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        resetAutoplay();
+      }
+    }
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  track?.addEventListener('touchstart', (e: TouchEvent) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  track?.addEventListener('touchend', (e: TouchEvent) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) {
+      nextSlide();
+      resetAutoplay();
+    }
+    if (touchEndX > touchStartX + swipeThreshold) {
+      prevSlide();
+      resetAutoplay();
+    }
+  }
+
+  function isInViewport(element: Element) {
+    const rect = element.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0;
+  }
+
+  // Pause autoplay when tab is not visible
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
+  });
+
+  // Initialize
+  updateCarousel();
+  startAutoplay();
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    stopAutoplay();
+  });
+</script>

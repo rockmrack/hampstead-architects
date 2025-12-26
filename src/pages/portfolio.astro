@@ -10,6 +10,9 @@ const projects = allProjects.sort((a, b) => {
   if (!a.data.featured && b.data.featured) return 1;
   return parseInt(b.data.details.year) - parseInt(a.data.details.year);
 });
+
+// Get unique categories for filtering
+const categories = ['All', ...new Set(projects.map(p => p.data.category))];
 ---
 
 <BaseLayout
@@ -31,11 +34,29 @@ const projects = allProjects.sort((a, b) => {
     </div>
   </section>
 
+  <!-- Filter Buttons -->
+  <section class="pb-16">
+    <div class="flex flex-wrap justify-center gap-3 px-6">
+      {categories.map((category) => (
+        <button
+          type="button"
+          class="filter-btn px-6 py-2 text-sm uppercase tracking-wider border border-charcoal/20 hover:border-oxidized-copper hover:text-oxidized-copper transition-all duration-300"
+          data-filter={category}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  </section>
+
   <!-- Portfolio Grid -->
-  <section class="section-padding">
-    <div class="space-y-section">
+  <section class="section-padding pt-0">
+    <div id="portfolio-grid" class="space-y-section">
       {projects.map((project, index) => (
-        <article class={`grid-editorial ${index % 2 === 0 ? '' : 'bg-warm-stone -mx-container px-container py-section'}`}>
+        <article
+          class={`portfolio-item grid-editorial ${index % 2 === 0 ? '' : 'bg-warm-stone -mx-container px-container py-section'}`}
+          data-category={project.data.category}
+        >
           <!-- Image -->
           <div class={`col-span-12 lg:col-span-7 ${index % 2 === 0 ? '' : 'lg:order-2'}`}>
             <a href={`/projects/${project.slug}`} class="block img-framed aspect-[4/3] overflow-hidden group portfolio-item">
@@ -118,4 +139,59 @@ const projects = allProjects.sort((a, b) => {
     padding-left: theme('spacing.container');
     padding-right: theme('spacing.container');
   }
+
+  /* Filter buttons */
+  .filter-btn.active {
+    background-color: theme('colors.oxidized-copper');
+    color: theme('colors.off-white');
+    border-color: theme('colors.oxidized-copper');
+  }
+
+  /* Portfolio items animation */
+  .portfolio-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .portfolio-item.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    position: absolute;
+    left: -9999px;
+  }
 </style>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  // Set first button as active
+  if (filterBtns.length > 0) {
+    filterBtns[0].classList.add('active');
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      // Update active button
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Filter portfolio items
+      portfolioItems.forEach((item) => {
+        const category = item.getAttribute('data-category');
+
+        if (filter === 'All' || category === filter) {
+          item.classList.remove('hidden');
+          // Trigger reflow for animation
+          void (item as HTMLElement).offsetWidth;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

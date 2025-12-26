@@ -1,0 +1,130 @@
+---
+const team = [
+  {
+    name: "Catherine Westwood",
+    role: "Principal Curator",
+    image: "/images/team/catherine.jpg",
+    bio: "Former Camden Conservation Officer with 15 years of heritage architecture experience. Catherine curates projects in conservation areas and listed buildings, ensuring sensitive interventions that achieve planning approval while honoring architectural history.",
+    specialisms: ["Listed Buildings", "Conservation Areas", "English Heritage"],
+    credentials: "RIBA, IHBC"
+  },
+  {
+    name: "James McKenzie",
+    role: "Technical Curator",
+    image: "/images/team/james.jpg",
+    bio: "Chartered structural engineer specializing in basement excavations and complex underpinning. James curates technically challenging projects, assembling specialist teams for party wall projects, deep excavations, and structural interventions.",
+    specialisms: ["Basement Engineering", "Party Walls", "Structural Design"],
+    credentials: "CEng, MIStructE"
+  },
+  {
+    name: "Sophie Aldridge",
+    role: "Contemporary Curator",
+    image: "/images/team/sophie.jpg",
+    bio: "Award-winning architect known for securing planning approval for modern designs in sensitive contexts. Sophie curates contemporary projects, matching clients with architects who can achieve bold visions within conservation area constraints.",
+    specialisms: ["Modern Extensions", "Contemporary Design", "Planning Strategy"],
+    credentials: "RIBA, ARB"
+  }
+];
+---
+
+<section class="section-padding bg-warm-stone" aria-labelledby="team-heading">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <div class="text-center mb-16 max-w-3xl mx-auto">
+      <h2 id="team-heading" class="mb-6">
+        Meet the Curators
+      </h2>
+      <p class="text-lg text-charcoal/70 leading-relaxed">
+        Our curators are not salespeople—they are respected professionals who understand architecture, engineering, and planning. Each brings deep specialist knowledge to match your project with the perfect team.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+      {team.map((member) => (
+        <article class="team-member group">
+          <!-- Portrait -->
+          <div class="mb-6 overflow-hidden img-framed aspect-[3/4] bg-charcoal/5">
+            <img
+              src={member.image}
+              alt={`${member.name}, ${member.role}`}
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Info -->
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-2xl font-medium mb-1">
+                {member.name}
+              </h3>
+              <p class="text-oxidized-copper text-sm tracking-wide uppercase">
+                {member.role}
+              </p>
+              <p class="text-xs text-charcoal/50 mt-1">
+                {member.credentials}
+              </p>
+            </div>
+
+            <p class="text-charcoal/70 leading-relaxed">
+              {member.bio}
+            </p>
+
+            <!-- Specialisms -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              {member.specialisms.map((specialism) => (
+                <span class="text-xs px-3 py-1 bg-white border border-charcoal/10 rounded-full text-charcoal/60">
+                  {specialism}
+                </span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-16 pt-12 border-t border-charcoal/10">
+      <p class="text-lg text-charcoal/70 mb-8 max-w-2xl mx-auto">
+        Curious which curator is right for your project? Book a consultation to discuss your specific needs.
+      </p>
+      <a href="/contact" class="btn-primary">
+        Book a Consultation
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .team-member {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .team-member:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .team-member:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .team-member:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .team-member {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+</style>

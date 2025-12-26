@@ -1,0 +1,140 @@
+---
+const faqs = [
+  {
+    question: "What makes Hampstead Architects different from hiring an architect directly?",
+    answer: "We are curators, not just architects. We match your specific project to the specific specialist architect from our network. A Grade II listed Georgian townhouse requires different expertise than a contemporary basement excavation. We ensure you get the right specialist, then manage the entire process under one umbrella through the Hampstead Renovations Group."
+  },
+  {
+    question: "How long does the planning process typically take in Camden?",
+    answer: "Standard planning applications take 8-12 weeks for a decision. Listed building consent adds another 8 weeks. Complex projects in conservation areas (Hampstead Garden Suburb, Frognal) often require pre-application consultations adding 4-6 weeks. Party wall agreements for basements typically need 2-3 months. We manage all timelines and keep your project moving efficiently through each stage."
+  },
+  {
+    question: "What are the costs involved beyond the architect fees?",
+    answer: "A typical project includes: Architect fees (8-12% of build cost), Structural engineer (2-3%), Party wall surveyor (£3k-8k for basements), Planning fees (£500-2,000), Building control (£2k-5k), and Specialist consultants (heritage, acoustics, etc. - £2k-10k). We provide transparent cost breakdowns upfront so there are no surprises."
+  },
+  {
+    question: "Can you help with listed building consent?",
+    answer: "Absolutely. Listed building consent is one of our core specialisms. We work with heritage architects who have proven track records with English Heritage and Camden Conservation Officers. We've achieved consent for sensitive interventions in Grade II and Grade II* properties across Hampstead, Belsize Park, and the Garden Suburb."
+  },
+  {
+    question: "Do you work outside the Hampstead area?",
+    answer: "While we specialize in NW3 and NW11 (Hampstead, Belsize Park, Swiss Cottage, Primrose Hill, Garden Suburb), we accept projects across North London where our specialist knowledge adds value - particularly conservation areas, listed buildings, and complex basement excavations in Camden, Islington, and Barnet."
+  },
+  {
+    question: "What is the typical timeline from initial consultation to project completion?",
+    answer: "Pre-planning design: 8-12 weeks. Planning approval: 8-16 weeks. Detailed design & building regs: 12-16 weeks. Construction: varies by project size (small rear extension: 12-16 weeks, basement: 20-26 weeks, whole-house renovation: 6-12 months). Total timeline for a typical rear extension: 12-18 months from first meeting to completion."
+  },
+  {
+    question: "How do you handle party wall agreements for basement projects?",
+    answer: "We appoint specialist party wall surveyors who serve notices to your neighbors, conduct condition surveys, agree the method of work, and resolve any disputes. We maintain excellent neighbor relations through clear communication, reasonable working hours, and rigorous site management. Our track record: zero party wall disputes escalated to the Third Surveyor stage."
+  },
+  {
+    question: "Can I see examples of projects similar to mine?",
+    answer: "Yes. During our initial consultation, we present case studies from our portfolio that match your project type, conservation status, and architectural style. We can arrange site visits to completed projects (with client permission) and connect you with previous clients for references."
+  }
+];
+---
+
+<section class="section-padding" aria-labelledby="faq-heading">
+  <div class="max-w-4xl mx-auto px-6 md:px-12">
+    <h2 id="faq-heading" class="text-center mb-16">
+      Frequently Asked Questions
+    </h2>
+
+    <div class="space-y-4">
+      {faqs.map((faq, index) => (
+        <div class="faq-item border-b border-charcoal/10 last:border-0">
+          <button
+            type="button"
+            class="faq-question w-full text-left py-6 flex items-start justify-between gap-6 group"
+            aria-expanded="false"
+            aria-controls={`faq-answer-${index}`}
+            data-index={index}
+          >
+            <span class="text-lg md:text-xl font-medium text-charcoal group-hover:text-oxidized-copper transition-colors duration-300 flex-1">
+              {faq.question}
+            </span>
+            <span class="faq-icon text-2xl text-charcoal/40 group-hover:text-oxidized-copper transition-all duration-300 flex-shrink-0 transform">
+              +
+            </span>
+          </button>
+          <div
+            id={`faq-answer-${index}`}
+            class="faq-answer overflow-hidden transition-all duration-500 ease-out"
+            style="max-height: 0;"
+            role="region"
+          >
+            <div class="pb-6 pr-12">
+              <p class="text-charcoal/70 leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const faqQuestions = document.querySelectorAll('.faq-question');
+
+  faqQuestions.forEach((question) => {
+    question.addEventListener('click', () => {
+      const index = question.getAttribute('data-index');
+      const answer = document.getElementById(`faq-answer-${index}`);
+      const icon = question.querySelector('.faq-icon');
+      const isExpanded = question.getAttribute('aria-expanded') === 'true';
+
+      // Close all other FAQs
+      faqQuestions.forEach((otherQuestion) => {
+        if (otherQuestion !== question) {
+          const otherIndex = otherQuestion.getAttribute('data-index');
+          const otherAnswer = document.getElementById(`faq-answer-${otherIndex}`);
+          const otherIcon = otherQuestion.querySelector('.faq-icon');
+
+          otherQuestion.setAttribute('aria-expanded', 'false');
+          if (otherAnswer) {
+            otherAnswer.style.maxHeight = '0';
+          }
+          if (otherIcon) {
+            otherIcon.textContent = '+';
+            otherIcon.classList.remove('rotate-45');
+          }
+        }
+      });
+
+      // Toggle current FAQ
+      if (isExpanded) {
+        question.setAttribute('aria-expanded', 'false');
+        if (answer) {
+          answer.style.maxHeight = '0';
+        }
+        if (icon) {
+          icon.textContent = '+';
+          icon.classList.remove('rotate-45');
+        }
+      } else {
+        question.setAttribute('aria-expanded', 'true');
+        if (answer) {
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+        if (icon) {
+          icon.textContent = '×';
+          icon.classList.add('rotate-45');
+        }
+      }
+    });
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const activeElement = document.activeElement;
+    if (activeElement && activeElement.classList.contains('faq-question')) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        (activeElement as HTMLElement).click();
+      }
+    }
+  });
+</script>
