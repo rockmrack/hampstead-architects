@@ -1,86 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const projects = [
-  {
-    id: 'frognal-restoration',
-    title: 'The Frognal Restoration',
-    location: 'Frognal, NW3',
-    category: 'Conservation',
-    description: 'Grade II listed Georgian townhouse requiring sensitive restoration of original sash windows, lime render, and period stonework.',
-    image: '/images/portfolio/frognal.jpg',
-    details: {
-      area: '320 sqm',
-      year: '2023',
-      architect: 'Heritage Specialist',
-    }
-  },
-  {
-    id: 'swiss-cottage-penthouse',
-    title: 'The Swiss Cottage Penthouse',
-    location: 'Swiss Cottage, NW3',
-    category: 'Contemporary',
-    description: 'Rooftop extension with floor-to-ceiling glazing, creating a light-filled gallery space above a 1960s mansion block.',
-    image: '/images/portfolio/swiss-cottage.jpg',
-    details: {
-      area: '145 sqm',
-      year: '2024',
-      architect: 'Contemporary Specialist',
-    }
-  },
-  {
-    id: 'belsize-extension',
-    title: 'The Belsize Park Extension',
-    location: 'Belsize Park, NW3',
-    category: 'Extension',
-    description: 'Rear extension in warm brick with crittal-style glazing, connecting Victorian reception rooms to a contemporary garden room.',
-    image: '/images/portfolio/belsize.jpg',
-    details: {
-      area: '65 sqm',
-      year: '2023',
-      architect: 'Extension Specialist',
-    }
-  },
-  {
-    id: 'garden-suburb',
-    title: 'The Garden Suburb Renovation',
-    location: 'Hampstead Garden Suburb, N2',
-    category: 'Arts & Crafts',
-    description: 'Complete renovation of an Arts and Crafts house, respecting the original Lutyens-inspired design while upgrading to Passivhaus standards.',
-    image: '/images/portfolio/garden-suburb.jpg',
-    details: {
-      area: '280 sqm',
-      year: '2024',
-      architect: 'Heritage & Sustainability Specialist',
-    }
-  },
-  {
-    id: 'primrose-basement',
-    title: 'The Primrose Hill Basement',
-    location: 'Primrose Hill, NW3',
-    category: 'Basement',
-    description: 'Double-height basement excavation creating a wine cellar, cinema, and gym beneath a Victorian terrace.',
-    image: '/images/portfolio/primrose.jpg',
-    details: {
-      area: '120 sqm',
-      year: '2023',
-      architect: 'Structural Engineering Specialist',
-    }
-  },
-  {
-    id: 'hampstead-village',
-    title: 'The Hampstead Village Mews',
-    location: 'Hampstead Village, NW3',
-    category: 'New Build',
-    description: 'Contemporary mews house in a Conservation Area, using handmade bricks and zinc cladding to complement the historic streetscape.',
-    image: '/images/portfolio/mews.jpg',
-    details: {
-      area: '195 sqm',
-      year: '2024',
-      architect: 'Conservation & Contemporary Specialist',
-    }
-  },
-];
+// Get all projects from Content Collections
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => {
+  // Sort by featured first, then by year
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return parseInt(b.data.details.year) - parseInt(a.data.details.year);
+});
 ---
 
 <BaseLayout
@@ -96,7 +25,7 @@ const projects = [
           Selected Works
         </h1>
         <p class="text-2xl leading-relaxed text-charcoal/80 max-w-3xl">
-          We don't show 50 projects. We show 6 perfect ones. Each matched to the right architect, delivered by Hampstead Renovations.
+          Curated excellence. Each project matched to the right architect, delivered by Hampstead Renovations.
         </p>
       </div>
     </div>
@@ -109,42 +38,50 @@ const projects = [
         <article class={`grid-editorial ${index % 2 === 0 ? '' : 'bg-warm-stone -mx-container px-container py-section'}`}>
           <!-- Image -->
           <div class={`col-span-12 lg:col-span-7 ${index % 2 === 0 ? '' : 'lg:order-2'}`}>
-            <div class="img-framed aspect-[4/3] overflow-hidden group portfolio-item">
+            <a href={`/projects/${project.slug}`} class="block img-framed aspect-[4/3] overflow-hidden group portfolio-item">
               <img
-                src={project.image}
-                alt={`${project.title} - ${project.description}`}
+                src={project.data.coverImage}
+                alt={`${project.data.title} - ${project.data.description}`}
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-            </div>
+            </a>
           </div>
 
           <!-- Content -->
           <div class={`col-span-12 lg:col-span-4 ${index % 2 === 0 ? 'lg:col-start-9' : 'lg:col-start-1 lg:order-1'} mt-8 lg:mt-0 flex flex-col justify-center`}>
-            <span class="text-xs uppercase tracking-wider text-oxidized-copper mb-4">{project.category}</span>
+            <span class="text-xs uppercase tracking-wider text-oxidized-copper mb-4">{project.data.category}</span>
 
-            <h2 class="text-3xl lg:text-4xl mb-4">{project.title}</h2>
+            <h2 class="text-3xl lg:text-4xl mb-4">
+              <a href={`/projects/${project.slug}`} class="hover:text-oxidized-copper transition-colors">
+                {project.data.title}
+              </a>
+            </h2>
 
-            <p class="text-sm text-charcoal/50 mb-6">{project.location}</p>
+            <p class="text-sm text-charcoal/50 mb-6">{project.data.location}</p>
 
             <p class="text-lg leading-relaxed text-charcoal/80 mb-8">
-              {project.description}
+              {project.data.description}
             </p>
 
             <div class="grid grid-cols-3 gap-4 pt-6 border-t border-charcoal/10">
               <div>
                 <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-1">Area</p>
-                <p class="font-serif text-lg">{project.details.area}</p>
+                <p class="font-serif text-lg">{project.data.details.area}</p>
               </div>
               <div>
                 <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-1">Year</p>
-                <p class="font-serif text-lg">{project.details.year}</p>
+                <p class="font-serif text-lg">{project.data.details.year}</p>
               </div>
               <div class="col-span-3">
                 <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-1">Architect</p>
-                <p class="text-sm">{project.details.architect}</p>
+                <p class="text-sm">{project.data.details.architect}</p>
               </div>
             </div>
+
+            <a href={`/projects/${project.slug}`} class="mt-6 inline-block text-sm uppercase tracking-wider text-oxidized-copper hover:underline">
+              View Full Project →
+            </a>
           </div>
         </article>
       ))}

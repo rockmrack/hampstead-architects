@@ -1,0 +1,277 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+// Get related projects (same category, excluding current)
+const allProjects = await getCollection('projects');
+const relatedProjects = allProjects
+  .filter(p => p.data.category === project.data.category && p.slug !== project.slug)
+  .slice(0, 2);
+---
+
+<BaseLayout
+  title={`${project.data.title} - Hampstead Architects`}
+  description={project.data.description}
+  image={project.data.coverImage}
+>
+  <!-- Hero Section -->
+  <section class="section-padding pt-32">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-8">
+        <span class="text-xs uppercase tracking-wider text-oxidized-copper mb-4 block">
+          {project.data.category}
+        </span>
+        <h1 class="text-balance mb-6">{project.data.title}</h1>
+        <p class="text-xl text-charcoal/70 mb-8">{project.data.location}</p>
+        <p class="text-lg leading-relaxed text-charcoal/80">
+          {project.data.description}
+        </p>
+      </div>
+
+      <!-- Project Details Sidebar -->
+      <div class="col-span-12 lg:col-span-3 lg:col-start-10 mt-8 lg:mt-0">
+        <div class="bg-warm-stone p-8 space-y-6">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-2">Area</p>
+            <p class="font-serif text-2xl">{project.data.details.area}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-2">Completed</p>
+            <p class="font-serif text-2xl">{project.data.details.year}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-2">Architect</p>
+            <p class="text-sm">{project.data.details.architect}</p>
+          </div>
+          {project.data.details.type && (
+            <div>
+              <p class="text-xs uppercase tracking-wider text-charcoal/50 mb-2">Type</p>
+              <p class="text-sm">{project.data.details.type}</p>
+            </div>
+          )}
+          {project.data.details.conservation && (
+            <div class="pt-4 border-t border-charcoal/10">
+              <span class="text-xs text-oxidized-copper uppercase tracking-wider">
+                Conservation Area ✓
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cover Image -->
+  <section class="section-padding">
+    <div class="img-framed aspect-[16/10] overflow-hidden">
+      <img
+        src={project.data.coverImage}
+        alt={project.data.title}
+        class="w-full h-full object-cover"
+      />
+    </div>
+  </section>
+
+  <!-- Before/After Comparison (if available) -->
+  {project.data.beforeImage && project.data.afterImage && (
+    <section class="section-padding bg-warm-stone">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-center mb-12">Transformation</h2>
+        <div class="before-after-container relative aspect-[16/10] overflow-hidden rounded-lg">
+          <img
+            src={project.data.beforeImage}
+            alt="Before restoration"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <img
+            src={project.data.afterImage}
+            alt="After restoration"
+            class="absolute inset-0 w-full h-full object-cover transition-all duration-300"
+            style="clip-path: inset(0 50% 0 0);"
+            id="after-image"
+          />
+          <div
+            class="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize"
+            style="left: 50%;"
+            id="slider-handle"
+          >
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Project Story (Markdown Content) -->
+  <section class="section-padding">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-8 lg:col-start-3">
+        <article class="prose prose-lg max-w-none">
+          <Content />
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Gallery -->
+  {project.data.images.length > 0 && (
+    <section class="section-padding bg-warm-stone">
+      <h2 class="text-center mb-12">Project Gallery</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {project.data.images.map((image, index) => (
+          <div class="img-framed aspect-[4/3] overflow-hidden cursor-pointer gallery-image group">
+            <img
+              src={image}
+              alt={`${project.data.title} - Image ${index + 1}`}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Related Projects -->
+  {relatedProjects.length > 0 && (
+    <section class="section-padding">
+      <div class="grid-editorial">
+        <div class="col-span-12 mb-12">
+          <h2>More {project.data.category} Projects</h2>
+        </div>
+
+        {relatedProjects.map((related) => (
+          <article class="col-span-12 md:col-span-6 group">
+            <a href={`/projects/${related.slug}`}>
+              <div class="img-framed aspect-[4/3] overflow-hidden mb-6">
+                <img
+                  src={related.data.coverImage}
+                  alt={related.data.title}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <span class="text-xs uppercase tracking-wider text-oxidized-copper mb-2 block">
+                {related.data.category}
+              </span>
+              <h3 class="text-2xl mb-3 group-hover:text-oxidized-copper transition-colors">
+                {related.data.title}
+              </h3>
+              <p class="text-charcoal/70">{related.data.description}</p>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="section-padding text-center bg-oxidized-copper text-off-white">
+    <h2 class="text-balance mb-6">
+      Have a similar project in mind?
+    </h2>
+    <p class="text-lg mb-8 opacity-90">
+      Let's discuss how we can match you with the perfect architect.
+    </p>
+    <a
+      href="/contact"
+      class="inline-block px-8 py-3 border border-off-white text-off-white hover:bg-off-white hover:text-oxidized-copper transition-colors"
+    >
+      Start Your Project
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Prose styling for markdown content */
+  .prose {
+    @apply text-charcoal/80;
+  }
+
+  .prose h2 {
+    @apply text-3xl font-serif font-light mt-12 mb-6;
+  }
+
+  .prose h3 {
+    @apply text-2xl font-serif font-light mt-8 mb-4;
+  }
+
+  .prose p {
+    @apply mb-6 leading-relaxed;
+  }
+
+  .prose ul, .prose ol {
+    @apply mb-6 space-y-3;
+  }
+
+  .prose li {
+    @apply leading-relaxed;
+  }
+
+  .prose strong {
+    @apply text-charcoal font-medium;
+  }
+</style>
+
+<script>
+  // Before/After Slider Interaction
+  const container = document.querySelector('.before-after-container');
+  const afterImage = document.getElementById('after-image') as HTMLElement;
+  const sliderHandle = document.getElementById('slider-handle') as HTMLElement;
+
+  if (container && afterImage && sliderHandle) {
+    let isDragging = false;
+
+    function updateSlider(x: number) {
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const position = Math.max(0, Math.min(x - rect.left, rect.width));
+      const percentage = (position / rect.width) * 100;
+
+      if (afterImage && sliderHandle) {
+        afterImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+        sliderHandle.style.left = `${percentage}%`;
+      }
+    }
+
+    sliderHandle.addEventListener('mousedown', () => {
+      isDragging = true;
+    });
+
+    document.addEventListener('mousemove', (e: MouseEvent) => {
+      if (isDragging) {
+        updateSlider(e.clientX);
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    container.addEventListener('click', (e) => {
+      if (!isDragging) {
+        updateSlider((e as MouseEvent).clientX);
+      }
+    });
+  }
+</script>
