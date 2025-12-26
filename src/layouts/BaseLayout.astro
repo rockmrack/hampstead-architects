@@ -1,0 +1,222 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import SmoothScroll from '../components/SmoothScroll.astro';
+import ScrollAnimations from '../components/ScrollAnimations.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  schemaType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
+}
+
+const {
+  title = 'Hampstead Architects - Architecture, Curated',
+  description = 'We do not just design; we assemble the perfect team. Gateway to North London\'s finest architectural talent for Grade II listed restorations and modern basement excavations.',
+  image = '/images/og-image.jpg',
+  schemaType = 'WebPage'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site);
+
+// Schema.org structured data
+const architectureSchema = {
+  "@context": "https://schema.org",
+  "@type": "ArchitectureFirm",
+  "name": "Hampstead Architects",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "Hampstead Renovations Group"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Palace Court, 250 Finchley Rd",
+    "addressLocality": "Hampstead",
+    "addressRegion": "London",
+    "postalCode": "NW3 6DN",
+    "addressCountry": "GB"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "51.5504",
+    "longitude": "-0.1780"
+  },
+  "telephone": "+442071234567",
+  "email": "hello@hampsteadarchitects.co.uk",
+  "url": "https://hampsteadarchitects.co.uk",
+  "knowsAbout": [
+    "Conservation Areas",
+    "Grade II Listed Buildings",
+    "Basement Excavation",
+    "Sustainable Retrofit",
+    "Camden Planning",
+    "English Heritage"
+  ],
+  "areaServed": {
+    "@type": "City",
+    "name": "Hampstead, London"
+  }
+};
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": schemaType,
+  "name": title,
+  "description": description,
+  "url": canonicalURL.toString()
+};
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={imageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#FAFAFA" />
+
+    <!-- Preload Critical Fonts -->
+    <link rel="preload" href="/fonts/SuisseIntl-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/EditorialNew-Light.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Schema.org JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(architectureSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <!-- Pre-loader -->
+    <div id="preloader" class="fixed inset-0 z-[9999] bg-off-white flex items-center justify-center">
+      <svg width="200" height="80" viewBox="0 0 200 80" class="logo-draw">
+        <text x="0" y="40" font-family="Editorial New, serif" font-size="32" font-weight="300" fill="none" stroke="#1A1A1A" stroke-width="0.5">
+          HAMPSTEAD
+        </text>
+        <text x="0" y="70" font-family="Editorial New, serif" font-size="32" font-weight="300" fill="none" stroke="#1A1A1A" stroke-width="0.5">
+          ARCHITECTS
+        </text>
+      </svg>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor" aria-hidden="true"></div>
+
+    <!-- Main Content -->
+    <Navigation />
+
+    <main id="main-content" class="pt-20">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Smooth Scroll & Animations -->
+    <SmoothScroll />
+    <ScrollAnimations />
+
+    <!-- Scripts -->
+    <script>
+      // Pre-loader animation
+      window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+          setTimeout(() => {
+            preloader.style.opacity = '0';
+            preloader.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+              preloader.style.display = 'none';
+            }, 500);
+          }, 1200);
+        }
+      });
+
+      // Custom Cursor
+      const cursor = document.getElementById('cursor');
+      let mouseX = 0;
+      let mouseY = 0;
+      let cursorX = 0;
+      let cursorY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function animateCursor() {
+        const dx = mouseX - cursorX;
+        const dy = mouseY - cursorY;
+
+        cursorX += dx * 0.2;
+        cursorY += dy * 0.2;
+
+        if (cursor) {
+          cursor.style.left = cursorX + 'px';
+          cursor.style.top = cursorY + 'px';
+        }
+
+        requestAnimationFrame(animateCursor);
+      }
+
+      animateCursor();
+
+      // Expand cursor on hover over interactive elements
+      const interactiveElements = document.querySelectorAll('a, button, .portfolio-item, [role="button"]');
+
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor?.classList.add('expand');
+        });
+
+        el.addEventListener('mouseleave', () => {
+          cursor?.classList.remove('expand');
+        });
+      });
+
+      // Hide cursor on mobile/touch devices
+      if ('ontouchstart' in window) {
+        cursor?.style.setProperty('display', 'none');
+      }
+    </script>
+
+    <style>
+      /* Pre-loader SVG Animation */
+      .logo-draw text {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: draw 2s ease-in-out forwards;
+      }
+
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+          fill: #1A1A1A;
+        }
+      }
+    </style>
+  </body>
+</html>

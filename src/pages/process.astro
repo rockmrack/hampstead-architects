@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const steps = [
+  {
+    number: '01',
+    title: 'The Brief',
+    description: 'We sit down at Palace Court to understand your lifestyle, aspirations, and constraints. This isn\'t a form—it\'s a conversation about how you live.',
+    details: [
+      'In-person consultation at our Finchley Road studio',
+      'Lifestyle and spatial needs assessment',
+      'Budget and timeline alignment',
+      'Site analysis and constraints mapping',
+    ]
+  },
+  {
+    number: '02',
+    title: 'The Match',
+    description: 'We select the specific architect from our curated network who specializes in your exact requirement—whether that\'s Conservation Area consent or contemporary extensions.',
+    details: [
+      'Access to pre-vetted architectural specialists',
+      'Match based on project type and heritage constraints',
+      'Introduction to your dedicated architect',
+      'Transparent fee structures and timelines',
+    ]
+  },
+  {
+    number: '03',
+    title: 'The Delivery',
+    description: 'We oversee the transition from paper to build. Because we\'re part of Hampstead Renovations, we ensure your design intent is realized on site.',
+    details: [
+      'Planning application support and liaison',
+      'Party Wall Act coordination with neighbours',
+      'Seamless handover to our construction team',
+      'Single point of accountability from sketch to completion',
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="The Process - Hampstead Architects"
+  description="Our three-step concierge service: The Brief, The Match, The Delivery. How we connect you with the perfect architect for your Grade II listed restoration or basement excavation."
+  schemaType="AboutPage"
+>
+  <!-- Hero -->
+  <section class="section-padding min-h-[60vh] flex items-center bg-warm-stone">
+    <div class="grid-editorial w-full">
+      <div class="col-span-12 lg:col-span-8">
+        <h1 class="text-balance mb-8">
+          The Process
+        </h1>
+        <p class="text-2xl leading-relaxed text-charcoal/80 max-w-3xl">
+          Architecture as curation. We don't just design—we assemble the perfect team for your specific project.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Three Steps -->
+  <section class="section-padding">
+    {steps.map((step, index) => (
+      <article class={`grid-editorial py-section ${index !== steps.length - 1 ? 'border-b border-charcoal/10' : ''}`}>
+        <!-- Step Number & Title -->
+        <div class="col-span-12 lg:col-span-4">
+          <div class="sticky top-32">
+            <span class="font-serif text-6xl md:text-8xl text-charcoal/10 block mb-4">{step.number}</span>
+            <h2 class="text-4xl mb-6">{step.title}</h2>
+          </div>
+        </div>
+
+        <!-- Description & Details -->
+        <div class="col-span-12 lg:col-span-7 lg:col-start-6 mt-8 lg:mt-0">
+          <p class="text-xl leading-relaxed mb-8 text-charcoal/80">
+            {step.description}
+          </p>
+
+          <ul class="space-y-4" role="list">
+            {step.details.map((detail) => (
+              <li class="flex items-start gap-4">
+                <svg class="w-6 h-6 text-oxidized-copper flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-charcoal/70 leading-relaxed">{detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- Why This Matters -->
+  <section class="section-padding bg-oxidized-copper text-off-white">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-8 lg:col-start-3 text-center">
+        <h2 class="text-balance mb-8">
+          Why Our Concierge Model Works
+        </h2>
+
+        <div class="space-y-6 text-lg leading-relaxed opacity-90">
+          <p>
+            Traditional architectural practices operate on a one-size-fits-all model. But a Conservation Area specialist isn't necessarily an expert in contemporary basements.
+          </p>
+
+          <p>
+            We've built relationships with Hampstead's finest architects—each a master in their domain. Your project gets the exact expertise it deserves.
+          </p>
+
+          <p>
+            And because we're part of the Hampstead Renovations Group, we guarantee continuity from design to build. No disconnects. No surprises.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-padding text-center">
+    <h2 class="text-balance mb-8">
+      Let's start with the brief
+    </h2>
+    <a href="/contact" class="btn-primary">
+      Book Your Consultation
+    </a>
+  </section>
+</BaseLayout>

@@ -1,0 +1,112 @@
+---
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'The Process', href: '/process' },
+  { label: 'Local Heritage', href: '/heritage' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<nav class="fixed top-0 left-0 w-full z-50 bg-off-white/80 backdrop-blur-md" aria-label="Main navigation">
+  <div class="section-padding flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex flex-col leading-none hover:opacity-70 transition-opacity" aria-label="Hampstead Architects - Home">
+      <span class="font-serif text-xl tracking-tight">Hampstead</span>
+      <span class="font-serif text-xl tracking-tight">Architects</span>
+    </a>
+
+    <!-- Hamburger Menu Button -->
+    <button
+      id="menu-toggle"
+      class="hamburger z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5 cursor-pointer group"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="menu-panel"
+    >
+      <span class="block w-6 h-px bg-charcoal transition-transform duration-300 group-hover:bg-oxidized-copper"></span>
+      <span class="block w-6 h-px bg-charcoal transition-transform duration-300 group-hover:bg-oxidized-copper"></span>
+      <span class="block w-6 h-px bg-charcoal transition-transform duration-300 group-hover:bg-oxidized-copper"></span>
+    </button>
+  </div>
+
+  <!-- Full Screen Menu Panel -->
+  <div
+    id="menu-panel"
+    class="fixed inset-0 bg-warm-stone translate-x-full transition-transform duration-500 ease-in-out"
+    aria-hidden="true"
+  >
+    <div class="flex items-center justify-center h-full">
+      <ul class="space-y-8 text-center" role="list">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="menu-link font-serif text-5xl md:text-6xl lg:text-7xl font-light text-charcoal hover:text-oxidized-copper transition-colors duration-300 block"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Hamburger Menu Toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuPanel = document.getElementById('menu-panel');
+  const menuLinks = document.querySelectorAll('.menu-link');
+
+  let isOpen = false;
+
+  function toggleMenu() {
+    isOpen = !isOpen;
+
+    if (menuPanel && menuToggle) {
+      if (isOpen) {
+        menuPanel.classList.remove('translate-x-full');
+        menuPanel.setAttribute('aria-hidden', 'false');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      } else {
+        menuPanel.classList.add('translate-x-full');
+        menuPanel.setAttribute('aria-hidden', 'true');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    }
+  }
+
+  menuToggle?.addEventListener('click', toggleMenu);
+
+  // Close menu when clicking on a link
+  menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (isOpen) toggleMenu();
+    });
+  });
+
+  // Close menu with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      toggleMenu();
+    }
+  });
+</script>
+
+<style>
+  /* Animate hamburger lines when open */
+  #menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  #menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  #menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+</style>

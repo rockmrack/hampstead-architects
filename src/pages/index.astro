@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Hampstead Architects - Architecture, Curated"
+  description="We do not just design; we assemble the perfect team. Gateway to North London's finest architectural talent for Grade II listed restorations and modern basement excavations."
+>
+  <!-- Hero Section -->
+  <section class="section-padding min-h-screen flex items-center" aria-labelledby="hero-heading">
+    <div class="grid-editorial w-full">
+      <!-- Left: Headline -->
+      <div class="col-span-12 lg:col-span-6 flex items-center">
+        <h1 id="hero-heading" class="text-balance font-serif font-extralight">
+          Architecture,<br>Curated.
+        </h1>
+      </div>
+
+      <!-- Right: Ambient Video -->
+      <div class="col-span-12 lg:col-span-6 mt-12 lg:mt-0">
+        <div class="img-framed aspect-[4/5] overflow-hidden bg-warm-stone">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="w-full h-full object-cover opacity-80"
+            aria-label="Ambient video of light moving across architectural textures"
+          >
+            <source src="/videos/light-texture.mp4" type="video/mp4" />
+            <!-- Fallback image -->
+            <img src="/images/hero-fallback.jpg" alt="Light on architectural texture" class="w-full h-full object-cover" />
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Manifesto / Hook Section -->
+  <section class="section-padding bg-warm-stone" aria-labelledby="manifesto-heading">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-8 lg:col-start-3">
+        <h2 id="manifesto-heading" class="text-balance whitespace-luxury">
+          The Art of the Perfect Match
+        </h2>
+
+        <div class="prose prose-lg max-w-none space-y-6">
+          <p class="text-xl leading-relaxed">
+            Finding an architect is easy. Finding the <em>right</em> architect for a Grade II listed basement in Belsize Park is an art form.
+          </p>
+
+          <p class="leading-relaxed">
+            We are the curators of Hampstead's built environment. Whether it's a sensitive restoration in the Garden Suburb or a contemporary rear extension in Swiss Cottage, we match your specific project to the specific specialist architect.
+          </p>
+
+          <p class="leading-relaxed">
+            All managed under our umbrella. All delivered by the Hampstead Renovations Group—because we design what we can build.
+          </p>
+        </div>
+
+        <a href="/process" class="btn-primary mt-12">
+          Discover Our Process
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expertise Highlights -->
+  <section class="section-padding" aria-labelledby="expertise-heading">
+    <div class="grid-editorial">
+      <div class="col-span-12 mb-16">
+        <h2 id="expertise-heading" class="text-balance">Our Specialisms</h2>
+      </div>
+
+      <!-- Conservation Areas -->
+      <article class="col-span-12 md:col-span-4 group">
+        <div class="mb-6 overflow-hidden img-framed aspect-square">
+          <img
+            src="/images/conservation.jpg"
+            alt="Grade II listed building restoration in Hampstead"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="text-2xl mb-3">Conservation Areas</h3>
+        <p class="text-charcoal/70 leading-relaxed">
+          Expert navigation of English Heritage requirements, Camden Planning, and the Hampstead Garden Suburb Trust.
+        </p>
+      </article>
+
+      <!-- Basement Engineering -->
+      <article class="col-span-12 md:col-span-4 group mt-12 md:mt-0">
+        <div class="mb-6 overflow-hidden img-framed aspect-square">
+          <img
+            src="/images/basement.jpg"
+            alt="Modern basement excavation and structural engineering"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="text-2xl mb-3">Basement Excavation</h3>
+        <p class="text-charcoal/70 leading-relaxed">
+          Structural integrity protection during deep excavations. We reassure your neighbours and deliver on our promises.
+        </p>
+      </article>
+
+      <!-- Sustainable Retrofit -->
+      <article class="col-span-12 md:col-span-4 group mt-12 md:mt-0">
+        <div class="mb-6 overflow-hidden img-framed aspect-square">
+          <img
+            src="/images/sustainable.jpg"
+            alt="Sustainable retrofit and energy-efficient design"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="text-2xl mb-3">Sustainable Retrofit</h3>
+        <p class="text-charcoal/70 leading-relaxed">
+          Future-proofing period properties with cutting-edge insulation, heat pumps, and energy performance upgrades.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Hampstead Renovations Badge -->
+  <section class="section-padding bg-oxidized-copper text-off-white text-center" aria-label="Hampstead Renovations Group">
+    <div class="max-w-2xl mx-auto">
+      <p class="font-serif text-3xl mb-4">Powered by Hampstead Renovations</p>
+      <p class="text-lg opacity-90">
+        We design what we can build. From concept to completion, under one roof.
+      </p>
+      <a href="https://hampsteadrenovations.co.uk" class="inline-block mt-8 px-8 py-3 border border-off-white text-off-white hover:bg-off-white hover:text-oxidized-copper transition-colors">
+        Visit Hampstead Renovations
+      </a>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section-padding text-center" aria-labelledby="cta-heading">
+    <h2 id="cta-heading" class="text-balance mb-8">
+      Ready to find your perfect architect?
+    </h2>
+    <a href="/contact" class="btn-primary">
+      Book a Consultation at Palace Court
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Prose styling for manifesto section */
+  .prose em {
+    font-style: italic;
+    color: theme('colors.oxidized-copper');
+  }
+
+  .prose p {
+    @apply text-charcoal/80;
+  }
+</style>

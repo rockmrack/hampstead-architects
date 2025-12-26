@@ -1,0 +1,9 @@
+# Vercel ignore patterns
+node_modules/
+.astro/
+dist/
+.env*
+*.log
+.DS_Store
+.vscode/
+.idea/
