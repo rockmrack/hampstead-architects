@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Philosophy - Hampstead Architects"
+  description="London is not a blank canvas. It is a dialogue between history and ambition. Our philosophy: Architecture, Grounded."
+  schemaType="AboutPage"
+>
+  <!-- Hero Section -->
+  <section class="section-padding min-h-[70vh] flex items-center">
+    <div class="grid-editorial w-full">
+      <div class="col-span-12 lg:col-span-10">
+        <p class="text-sm uppercase tracking-wider text-oxidized-copper mb-6">The Philosophy</p>
+        <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-extralight mb-8">
+          Architecture,<br>Grounded.
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Headline Statement -->
+  <section class="section-padding bg-oxidized-copper text-off-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-serif text-3xl md:text-4xl lg:text-5xl font-light leading-relaxed">
+        London is not a blank canvas.<br>
+        It is a dialogue between history and ambition.
+      </h2>
+    </div>
+  </section>
+
+  <!-- The Narrative -->
+  <section class="section-padding">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-8 lg:col-start-3">
+        <div class="prose prose-lg max-w-none space-y-8">
+          <p class="text-2xl leading-relaxed text-charcoal/90 font-light">
+            To build in North West London is to inherit a legacy. From the red-brick mansion blocks of Swiss Cottage to the protected conservation areas of Hampstead Village, every line we draw must respect what came before it.
+          </p>
+
+          <p class="text-xl leading-relaxed">
+            But respect does not mean silence.
+          </p>
+
+          <p class="text-lg leading-relaxed text-charcoal/80">
+            At <strong>Hampstead Architects</strong>, we believe that the finest homes emerge from a tension between the <strong>Dream</strong> and the <strong>Reality</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Curator Model -->
+  <section class="section-padding bg-warm-stone">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-5">
+        <h2 class="text-balance mb-8">
+          The Curator Model
+        </h2>
+      </div>
+
+      <div class="col-span-12 lg:col-span-6 lg:col-start-7">
+        <div class="space-y-6 text-lg leading-relaxed">
+          <p>
+            We are not a single studio imposing a single style. We are curators of the finest architectural talent in London.
+          </p>
+
+          <p>
+            Every project demands a specific voice. A minimalist glass extension in Belsize Park requires a different hand than a period restoration in Frognal. We do not force your home into our template; we select the specific architect from our network who is the master of your specific challenge.
+          </p>
+
+          <div class="mt-12 pt-8 border-t border-charcoal/10">
+            <a href="/process" class="btn-primary">
+              Explore Our Process
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The "Buildability" Guarantee -->
+  <section class="section-padding">
+    <div class="grid-editorial">
+      <div class="col-span-12 lg:col-span-5 lg:order-2">
+        <h2 class="text-balance mb-8">
+          The "Buildability" Guarantee
+        </h2>
+      </div>
+
+      <div class="col-span-12 lg:col-span-6 lg:order-1">
+        <div class="space-y-6 text-lg leading-relaxed">
+          <p class="text-xl text-oxidized-copper italic">
+            The greatest tragedy in our industry is the "Unbuildable Drawing"—beautiful designs that fail when they meet the hard truths of structural engineering and budget.
+          </p>
+
+          <p>
+            As the architectural arm of the <strong>Hampstead Renovations Group</strong>, we operate differently. We are builders first, designers second.
+          </p>
+
+          <p>
+            We do not present concepts that cannot be executed. Because we are based physically at <strong>Palace Court</strong>, alongside the construction teams who will pour the concrete and lay the steel, every line we draw is stress-tested for reality.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Promise -->
+  <section class="section-padding bg-warm-stone">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-center mb-12">Our Promise</h2>
+
+      <div class="space-y-8 text-center">
+        <p class="text-2xl leading-relaxed text-charcoal/90 font-light">
+          We offer the creativity of a design studio, backed by the certainty of a construction firm.
+        </p>
+
+        <p class="text-lg leading-relaxed text-charcoal/80">
+          Whether you require a discreet basement excavation or a landmark renovation, we provide the team that delivers not just a vision, but a home.
+        </p>
+
+        <div class="pt-8">
+          <p class="text-2xl font-serif text-oxidized-copper mb-2">
+            Precision. Provenance. Peace of Mind.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit Us -->
+  <section class="section-padding text-center border-t border-charcoal/10">
+    <div class="max-w-2xl mx-auto">
+      <p class="text-sm uppercase tracking-wider text-charcoal/60 mb-4">Visit us at</p>
+      <h3 class="font-serif text-3xl mb-2">Palace Court</h3>
+      <p class="text-lg text-charcoal/70 mb-6">
+        250 Finchley Road, London NW3 6DN
+      </p>
+      <p class="text-sm text-charcoal/50 mb-8 italic">By Appointment Only</p>
+
+      <a href="/contact" class="btn-primary">
+        Book a Consultation
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Enhanced prose styling */
+  .prose strong {
+    color: theme('colors.oxidized-copper');
+    font-weight: 600;
+  }
+
+  .prose em {
+    font-style: italic;
+    color: theme('colors.charcoal');
+  }
+</style>
