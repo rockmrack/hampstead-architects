@@ -5,31 +5,35 @@ import FAQ from '../components/FAQ.astro';
 const steps = [
   {
     number: '01',
-    title: 'The Brief',
-    description: 'We sit down at Palace Court to understand your lifestyle, aspirations, and constraints. This isn\'t a form—it\'s a conversation about how you live.',
+    title: 'The Briefing',
+    subtitle: 'Defining Parameters',
+    description: 'We define the functional and structural parameters at Palace Court. This isn\'t a form—it\'s a conversation about how you live, your aspirations, and the reality of your property.',
     details: [
       'In-person consultation at our Finchley Road studio',
       'Lifestyle and spatial needs assessment',
       'Budget and timeline alignment',
-      'Site analysis and constraints mapping',
+      'Site analysis and constraints mapping (conservation areas, party walls, listed status)',
     ]
   },
   {
     number: '02',
-    title: 'The Match',
-    description: 'We select the specific architect from our curated network who specializes in your exact requirement—whether that\'s Conservation Area consent or contemporary extensions.',
+    title: 'The Audition',
+    subtitle: '3 Concepts, 3 Studios',
+    description: 'We bring you 3 distinct design concepts from 3 specialist studios within our network. Each represents a different creative approach—The Modernist, The Classicist, The Avant-Garde.',
     details: [
       'Access to pre-vetted architectural specialists',
-      'Match based on project type and heritage constraints',
-      'Introduction to your dedicated architect',
-      'Transparent fee structures and timelines',
+      'Three complete design visions tailored to your brief',
+      'All concepts pre-vetted for buildability and budget compliance',
+      'Transparent fee structures and timelines for each option',
     ]
   },
   {
     number: '03',
-    title: 'The Delivery',
-    description: 'We oversee the transition from paper to build. Because we\'re part of Hampstead Renovations, we ensure your design intent is realized on site.',
+    title: 'The Choice',
+    subtitle: 'You Select, We Deliver',
+    description: 'You select the design lead that moves you. We retain the role of Principal Contractor and Project Guardian to ensure the budget holds and the vision is realized on site.',
     details: [
+      'Choose your preferred architect and design direction',
       'Planning application support and liaison',
       'Party Wall Act coordination with neighbours',
       'Seamless handover to our construction team',
@@ -47,12 +51,13 @@ const steps = [
   <!-- Hero -->
   <section class="section-padding min-h-[60vh] flex items-center bg-warm-stone">
     <div class="grid-editorial w-full">
-      <div class="col-span-12 lg:col-span-8">
+      <div class="col-span-12 lg:col-span-10">
+        <p class="text-sm uppercase tracking-wider text-oxidized-copper mb-6">The Curated Path</p>
         <h1 class="text-balance mb-8">
-          The Process
+          Three Steps to Your Perfect Architect
         </h1>
         <p class="text-2xl leading-relaxed text-charcoal/80 max-w-3xl">
-          Architecture as curation. We don't just design—we assemble the perfect team for your specific project.
+          We don't just design—we present you with a curated selection of the finest creative minds in North West London, each tailored to your exact brief.
         </p>
       </div>
     </div>
@@ -66,7 +71,8 @@ const steps = [
         <div class="col-span-12 lg:col-span-4">
           <div class="sticky top-32">
             <span class="font-serif text-6xl md:text-8xl text-charcoal/10 block mb-4">{step.number}</span>
-            <h2 class="text-4xl mb-6">{step.title}</h2>
+            <h2 class="text-4xl mb-3">{step.title}</h2>
+            <p class="text-sm uppercase tracking-wider text-oxidized-copper">{step.subtitle}</p>
           </div>
         </div>
 
