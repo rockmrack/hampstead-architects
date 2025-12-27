@@ -8,7 +8,9 @@
       "Bash(git reset:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial deployment - Hampstead Architects platform\n\nComplete luxury architectural concierge website built with Astro.\nOptimized for Vercel deployment with silent luxury design principles.\n\nFeatures:\n- 5 fully responsive pages \\(Home, Process, Heritage, Portfolio, Contact\\)\n- GSAP + Lenis smooth scroll with parallax animations\n- Custom cursor and SVG pre-loader\n- Multi-step project inquiry wizard\n- Complete SEO with Schema.org structured data\n- Accessibility compliant \\(ARIA labels, keyboard nav, reduced motion\\)\n- Vercel-optimized build configuration\n\nTechnical Stack:\n- Astro 4.x static site generation\n- Tailwind CSS with custom design tokens\n- TypeScript strict mode\n- GSAP 3.12 for animations\n- Lenis 1.1 for smooth scroll\n\nReady for deployment:\n- Zero build errors\n- Production build tested and passing\n- Vercel configuration optimized\n- Complete documentation included\n\n🤖 Generated with Claude Code \\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git push:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(npm install:*)",
+      "Bash(npx astro build:*)"
     ]
   }
 }

@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Get URL parameters for personalization
+const url = new URL(Astro.request.url);
+const postcode = url.searchParams.get('postcode') || 'your area';
+const projectType = url.searchParams.get('projectType') || 'project';
+
+// Map project type IDs to readable names
+const projectTypeNames: Record<string, string> = {
+  'renovation': 'Full Renovation',
+  'extension': 'Extension / Basement',
+  'newbuild': 'New Build',
+  'heritage': 'Heritage Restoration',
+};
+
+const projectName = projectTypeNames[projectType] || projectType;
+---
+
+<BaseLayout
+  title="Application Received - Hampstead Architects"
+  description="Your project inquiry has been received. Our senior architect will review your brief and contact you within 24 hours."
+  schemaType="WebPage"
+>
+  <!-- Hero Success Message -->
+  <section class="section-padding min-h-[80vh] flex items-center justify-center bg-warm-stone">
+    <div class="max-w-3xl mx-auto text-center">
+      <!-- Success Icon -->
+      <div class="mb-12 inline-flex items-center justify-center w-24 h-24 rounded-full bg-oxidized-copper/10">
+        <svg class="w-12 h-12 text-oxidized-copper" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="text-balance mb-8">
+        Application Received
+      </h1>
+
+      <!-- Personalized Message -->
+      <div class="space-y-6 text-lg text-charcoal/80 leading-relaxed">
+        <p>
+          Our Senior Architect will review the brief for <strong class="text-oxidized-copper">{postcode}</strong> and contact you within <strong>24 hours</strong> to schedule the feasibility call.
+        </p>
+
+        <p>
+          We're already thinking about how to approach your {projectName.toLowerCase()} within the constraints of your site.
+        </p>
+
+        <p class="text-base italic">
+          Next step: We'll send a calendar link for your consultation at <strong>Palace Court, 250 Finchley Road, NW3 6DN</strong>.
+        </p>
+      </div>
+
+      <!-- Divider -->
+      <div class="my-12 border-t border-charcoal/10"></div>
+
+      <!-- What Happens Next Section -->
+      <div class="text-left max-w-2xl mx-auto space-y-8">
+        <h2 class="text-2xl font-serif font-light text-center mb-8">
+          What Happens Next
+        </h2>
+
+        <div class="space-y-6">
+          <!-- Step 1 -->
+          <div class="flex gap-6">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-oxidized-copper text-off-white flex items-center justify-center font-serif text-lg">
+              1
+            </div>
+            <div>
+              <h3 class="text-lg font-medium mb-2">Feasibility Review (24 hours)</h3>
+              <p class="text-charcoal/70">
+                We'll check planning constraints, conservation area rules, and buildability for your postcode. This ensures we're not wasting your time on an impossible brief.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex gap-6">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-oxidized-copper text-off-white flex items-center justify-center font-serif text-lg">
+              2
+            </div>
+            <div>
+              <h3 class="text-lg font-medium mb-2">Consultation at Palace Court (60 minutes)</h3>
+              <p class="text-charcoal/70">
+                We'll discuss your vision, show you precedent projects, and explain the planning/architectural process. You'll leave with clarity, not sales pressure.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex gap-6">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-oxidized-copper text-off-white flex items-center justify-center font-serif text-lg">
+              3
+            </div>
+            <div>
+              <h3 class="text-lg font-medium mb-2">Architect Matching & Proposal</h3>
+              <p class="text-charcoal/70">
+                If we proceed, we'll match you with the specialist architect from our network who's perfect for your constraints. You'll receive a detailed proposal with fees, timeline, and scope.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="mt-16 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/portfolio" class="btn-primary">
+          View Our Portfolio
+        </a>
+        <a href="/process" class="inline-block px-8 py-3 border border-charcoal text-charcoal hover:bg-charcoal hover:text-off-white transition-colors text-sm tracking-wider uppercase">
+          Learn About Our Process
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reassurance Section -->
+  <section class="section-padding bg-oxidized-copper text-off-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-serif font-light mb-6">
+        No Sales Pressure. Just Architecture.
+      </h2>
+      <p class="text-lg leading-relaxed opacity-90">
+        We're curators, not salespeople. If your project isn't feasible, or if we're not the right fit, we'll tell you honestly. Our reputation is built on delivering excellent work, not maximizing conversions.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Success page animations */
+  section > div {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    section > div {
+      animation: none;
+    }
+  }
+</style>

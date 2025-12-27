@@ -1,267 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import InquiryWizard from '../components/InquiryWizard';
 ---
 
 <BaseLayout
-  title="Contact - Hampstead Architects"
-  description="Book a consultation at Palace Court, 250 Finchley Road, NW3 6DN. Start your architectural project with our project inquiry wizard."
+  title="Start Your Project - Hampstead Architects"
+  description="Book a consultation at Palace Court, 250 Finchley Road, NW3 6DN. Begin your architectural journey with our project inquiry wizard."
   schemaType="ContactPage"
 >
   <!-- Hero -->
   <section class="section-padding min-h-[40vh] flex items-center bg-warm-stone">
     <div class="grid-editorial w-full">
-      <div class="col-span-12 lg:col-span-8">
+      <div class="col-span-12 lg:col-span-10 mx-auto text-center">
         <h1 class="text-balance mb-6">
-          Book Your Consultation
+          Start Your Application
         </h1>
-        <p class="text-xl leading-relaxed text-charcoal/80 max-w-2xl">
-          Meet us at Palace Court to discuss your project. We'll match you with the perfect architect for your specific requirements.
+        <p class="text-xl leading-relaxed text-charcoal/80 max-w-3xl mx-auto">
+          Answer five quick questions. We'll match you with the perfect architect and schedule your consultation at Palace Court.
+        </p>
+        <p class="text-sm text-charcoal/60 mt-4 italic">
+          Takes approximately 2 minutes. No commitment required.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Two Column: Form + Info -->
+  <!-- Two Column: Wizard + Info -->
   <section class="section-padding">
     <div class="grid-editorial">
       <!-- Project Inquiry Wizard -->
       <div class="col-span-12 lg:col-span-7">
-        <form id="project-inquiry" class="space-y-8" aria-label="Project inquiry form">
-          <!-- Step 1: Basic Info -->
-          <div class="form-step" data-step="1">
-            <h2 class="text-2xl font-serif mb-8">Tell us about yourself</h2>
-
-            <div class="space-y-6">
-              <div>
-                <label for="name" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Your Name <span class="text-oxidized-copper">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  class="w-full px-4 py-3 bg-warm-stone border-b-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors"
-                  aria-required="true"
-                />
-              </div>
-
-              <div>
-                <label for="email" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Email Address <span class="text-oxidized-copper">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  class="w-full px-4 py-3 bg-warm-stone border-b-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors"
-                  aria-required="true"
-                />
-              </div>
-
-              <div>
-                <label for="phone" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  class="w-full px-4 py-3 bg-warm-stone border-b-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors"
-                />
-              </div>
-
-              <div>
-                <label for="address" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Property Address <span class="text-oxidized-copper">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  required
-                  placeholder="e.g., Frognal, NW3"
-                  class="w-full px-4 py-3 bg-warm-stone border-b-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors"
-                  aria-required="true"
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2: Property Details -->
-          <div class="form-step hidden" data-step="2">
-            <h2 class="text-2xl font-serif mb-8">About your property</h2>
-
-            <div class="space-y-6">
-              <div>
-                <label class="block text-sm uppercase tracking-wider text-charcoal/70 mb-4">
-                  Is the property Listed? <span class="text-oxidized-copper">*</span>
-                </label>
-                <div class="space-y-3" role="radiogroup" aria-required="true">
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="listed" value="yes" required class="w-5 h-5 text-oxidized-copper" />
-                    <span>Yes, it's a listed building</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="listed" value="no" class="w-5 h-5 text-oxidized-copper" />
-                    <span>No, it's not listed</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="listed" value="unsure" class="w-5 h-5 text-oxidized-copper" />
-                    <span>I'm not sure</span>
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-sm uppercase tracking-wider text-charcoal/70 mb-4">
-                  Is it in a Conservation Area? <span class="text-oxidized-copper">*</span>
-                </label>
-                <div class="space-y-3" role="radiogroup" aria-required="true">
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="conservation" value="yes" required class="w-5 h-5 text-oxidized-copper" />
-                    <span>Yes</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="conservation" value="no" class="w-5 h-5 text-oxidized-copper" />
-                    <span>No</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="conservation" value="unsure" class="w-5 h-5 text-oxidized-copper" />
-                    <span>I'm not sure</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 3: Project Goals -->
-          <div class="form-step hidden" data-step="3">
-            <h2 class="text-2xl font-serif mb-8">What's the primary goal?</h2>
-
-            <div class="space-y-6">
-              <div>
-                <label class="block text-sm uppercase tracking-wider text-charcoal/70 mb-4">
-                  Select your main objective <span class="text-oxidized-copper">*</span>
-                </label>
-                <div class="space-y-3" role="radiogroup" aria-required="true">
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="goal" value="space" required class="w-5 h-5 text-oxidized-copper" />
-                    <span>Create More Space (extension, basement, loft)</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="goal" value="light" class="w-5 h-5 text-oxidized-copper" />
-                    <span>Bring in More Light (glazing, rooflights)</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="goal" value="value" class="w-5 h-5 text-oxidized-copper" />
-                    <span>Increase Property Value</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="goal" value="restoration" class="w-5 h-5 text-oxidized-copper" />
-                    <span>Restore Period Features</span>
-                  </label>
-                  <label class="flex items-center gap-3 cursor-pointer">
-                    <input type="radio" name="goal" value="sustainability" class="w-5 h-5 text-oxidized-copper" />
-                    <span>Improve Energy Efficiency</span>
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label for="budget" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Approximate Budget
-                </label>
-                <select
-                  id="budget"
-                  name="budget"
-                  class="w-full px-4 py-3 bg-warm-stone border-b-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors"
-                >
-                  <option value="">Prefer not to say</option>
-                  <option value="50-100k">£50,000 - £100,000</option>
-                  <option value="100-250k">£100,000 - £250,000</option>
-                  <option value="250-500k">£250,000 - £500,000</option>
-                  <option value="500k+">£500,000+</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="timeline" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Preferred Timeline
-                </label>
-                <select
-                  id="timeline"
-                  name="timeline"
-                  class="w-full px-4 py-3 bg-warm-stone border-b-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors"
-                >
-                  <option value="">Select timeline</option>
-                  <option value="urgent">Within 3 months</option>
-                  <option value="soon">3-6 months</option>
-                  <option value="flexible">6-12 months</option>
-                  <option value="planning">Just planning ahead</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="message" class="block text-sm uppercase tracking-wider text-charcoal/70 mb-2">
-                  Additional Details
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  placeholder="Tell us more about your vision..."
-                  class="w-full px-4 py-3 bg-warm-stone border-2 border-charcoal/20 focus:border-oxidized-copper outline-none transition-colors resize-none"
-                ></textarea>
-              </div>
-            </div>
-          </div>
-
-          <!-- Navigation Buttons -->
-          <div class="flex justify-between items-center pt-8 border-t border-charcoal/10">
-            <button
-              type="button"
-              id="prev-btn"
-              class="px-6 py-2 text-charcoal hover:text-oxidized-copper transition-colors hidden"
-            >
-              ← Previous
-            </button>
-
-            <div class="flex gap-2 mx-auto">
-              <span class="step-indicator w-2 h-2 rounded-full bg-oxidized-copper" data-step="1"></span>
-              <span class="step-indicator w-2 h-2 rounded-full bg-charcoal/20" data-step="2"></span>
-              <span class="step-indicator w-2 h-2 rounded-full bg-charcoal/20" data-step="3"></span>
-            </div>
-
-            <button
-              type="button"
-              id="next-btn"
-              class="btn-primary"
-            >
-              Next →
-            </button>
-
-            <button
-              type="submit"
-              id="submit-btn"
-              class="btn-primary hidden"
-            >
-              Book Consultation
-            </button>
-          </div>
-        </form>
-
-        <!-- Success Message -->
-        <div id="success-message" class="hidden text-center py-12">
-          <svg class="w-16 h-16 text-oxidized-copper mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-          </svg>
-          <h2 class="text-3xl font-serif mb-4">Thank you for your inquiry</h2>
-          <p class="text-lg text-charcoal/70">
-            We'll be in touch within 24 hours to arrange your consultation at Palace Court.
-          </p>
-        </div>
+        <InquiryWizard client:load />
       </div>
 
       <!-- Contact Info Sidebar -->
@@ -276,25 +45,55 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               Hampstead, London<br>
               NW3 6DN
             </address>
+            <p class="text-sm text-charcoal/60 mt-4 italic">
+              By appointment only
+            </p>
           </div>
 
           <!-- Contact -->
           <div>
-            <h3 class="text-sm uppercase tracking-wider text-charcoal/50 mb-4">Contact</h3>
+            <h3 class="text-sm uppercase tracking-wider text-charcoal/50 mb-4">Questions?</h3>
             <p class="leading-relaxed">
               <a href="tel:+442071234567" class="hover:text-oxidized-copper transition-colors">020 7123 4567</a><br>
               <a href="mailto:hello@hampsteadarchitects.co.uk" class="hover:text-oxidized-copper transition-colors">hello@hampsteadarchitects.co.uk</a>
             </p>
           </div>
 
-          <!-- Hours -->
+          <!-- Consultation Hours -->
           <div>
             <h3 class="text-sm uppercase tracking-wider text-charcoal/50 mb-4">Consultation Hours</h3>
             <p class="leading-relaxed text-sm">
               Monday - Friday: 9am - 6pm<br>
-              Saturday: 10am - 4pm (by appointment)<br>
+              Saturday: 10am - 4pm<br>
               Sunday: Closed
             </p>
+          </div>
+
+          <!-- What to Expect -->
+          <div class="pt-8 border-t border-charcoal/10">
+            <h3 class="text-sm uppercase tracking-wider text-charcoal/50 mb-4">What to Expect</h3>
+            <ul class="space-y-3 text-sm text-charcoal/70">
+              <li class="flex gap-2">
+                <span class="text-oxidized-copper">✓</span>
+                <span>Response within 24 hours</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-oxidized-copper">✓</span>
+                <span>Feasibility review of your site</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-oxidized-copper">✓</span>
+                <span>In-person consultation at Palace Court</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-oxidized-copper">✓</span>
+                <span>Matched with specialist architect</span>
+              </li>
+              <li class="flex gap-2">
+                <span class="text-oxidized-copper">✓</span>
+                <span>No sales pressure - honest advice only</span>
+              </li>
+            </ul>
           </div>
 
           <!-- Map Placeholder -->
@@ -310,77 +109,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
   </section>
+
+  <!-- Trust Signals -->
+  <section class="section-padding bg-oxidized-copper text-off-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-serif font-light mb-6">
+        Trusted by Hampstead's Most Discerning Homeowners
+      </h2>
+      <p class="text-lg leading-relaxed opacity-90 mb-8">
+        Our curated network includes RIBA Chartered architects, conservation specialists, and structural engineers. Each one vetted for technical excellence and planning expertise.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <div>
+          <div class="text-4xl font-serif mb-2">15+</div>
+          <div class="text-sm uppercase tracking-wider opacity-80">Years Experience</div>
+        </div>
+        <div>
+          <div class="text-4xl font-serif mb-2">100%</div>
+          <div class="text-sm uppercase tracking-wider opacity-80">Planning Success Rate</div>
+        </div>
+        <div>
+          <div class="text-4xl font-serif mb-2">£50M+</div>
+          <div class="text-sm uppercase tracking-wider opacity-80">Projects Delivered</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
-
-<script>
-  // Multi-step form wizard
-  let currentStep = 1;
-  const totalSteps = 3;
-
-  const formSteps = document.querySelectorAll('.form-step');
-  const stepIndicators = document.querySelectorAll('.step-indicator');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const submitBtn = document.getElementById('submit-btn');
-  const form = document.getElementById('project-inquiry') as HTMLFormElement;
-  const successMessage = document.getElementById('success-message');
-
-  function showStep(step: number) {
-    formSteps.forEach((el, index) => {
-      if (index + 1 === step) {
-        el.classList.remove('hidden');
-      } else {
-        el.classList.add('hidden');
-      }
-    });
-
-    stepIndicators.forEach((el, index) => {
-      if (index + 1 <= step) {
-        el.classList.remove('bg-charcoal/20');
-        el.classList.add('bg-oxidized-copper');
-      } else {
-        el.classList.remove('bg-oxidized-copper');
-        el.classList.add('bg-charcoal/20');
-      }
-    });
-
-    // Button visibility
-    if (prevBtn && nextBtn && submitBtn) {
-      prevBtn.classList.toggle('hidden', step === 1);
-      nextBtn.classList.toggle('hidden', step === totalSteps);
-      submitBtn.classList.toggle('hidden', step !== totalSteps);
-    }
-  }
-
-  nextBtn?.addEventListener('click', () => {
-    if (currentStep < totalSteps) {
-      currentStep++;
-      showStep(currentStep);
-    }
-  });
-
-  prevBtn?.addEventListener('click', () => {
-    if (currentStep > 1) {
-      currentStep--;
-      showStep(currentStep);
-    }
-  });
-
-  form?.addEventListener('submit', (e: Event) => {
-    e.preventDefault();
-
-    // Here you would normally send the form data to your backend
-    // For now, just show success message
-    if (form && successMessage) {
-      form.classList.add('hidden');
-      successMessage.classList.remove('hidden');
-
-      // Log form data for demonstration
-      const formData = new FormData(form);
-      console.log('Form submitted:', Object.fromEntries(formData));
-    }
-  });
-
-  // Initialize
-  showStep(currentStep);
-</script>
