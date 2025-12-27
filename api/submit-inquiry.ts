@@ -1,13 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
-// Initialize Resend with API key from environment variables
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -28,302 +24,305 @@ export default async function handler(
     } = req.body;
 
     // Validate required fields
-    if (!name || !email || !phone || !postcode || !projectType) {
+    if (!name || !email || !phone || !postcode) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Map project type IDs to readable names
-    const projectTypeNames: Record<string, string> = {
+    // Map project type codes to readable labels
+    const projectTypeLabels: { [key: string]: string } = {
       'renovation': 'Full Renovation',
       'extension': 'Extension / Basement',
       'newbuild': 'New Build',
-      'heritage': 'Grade II Restoration',
+      'heritage': 'Heritage Restoration',
     };
 
-    const projectTypeName = projectTypeNames[projectType] || projectType;
+    const planningStatusLabels: { [key: string]: string } = {
+      'dreaming': 'Just Dreaming',
+      'concept': 'Concept Phase',
+      'approved': 'Planning Submitted/Approved',
+      'rescue': 'Rescue Mission',
+    };
 
-    // Map budget IDs to readable names
-    const budgetNames: Record<string, string> = {
+    const budgetLabels: { [key: string]: string } = {
       '100-250': '£100k - £250k',
       '250-500': '£250k - £500k',
       '500-1000': '£500k - £1M',
       '1000+': '£1M+',
     };
 
-    const budgetName = budgetNames[budget] || 'Not specified';
-
-    // Send white glove acknowledgment email to client
+    // Send client confirmation email
     const clientEmail = await resend.emails.send({
       from: 'The Studio at Palace Court <studio@hampsteadarchitects.com>',
       to: [email],
       replyTo: 'private-clients@hampsteadarchitects.com',
-      subject: `Receipt of Brief: ${projectTypeName} at ${postcode}`,
+      subject: `Receipt of Brief: ${projectTypeLabels[projectType] || projectType} at ${postcode}`,
       html: `
         <!DOCTYPE html>
         <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-              line-height: 1.7;
-              color: #1E1E1E;
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-            }
-            .header {
-              border-bottom: 1px solid #E5E5E5;
-              padding-bottom: 20px;
-              margin-bottom: 30px;
-            }
-            .logo {
-              font-size: 20px;
-              font-weight: 300;
-              letter-spacing: -0.02em;
-              color: #1E1E1E;
-              margin-bottom: 5px;
-            }
-            h1 {
-              font-size: 18px;
-              font-weight: 500;
-              margin: 30px 0 20px 0;
-              color: #3D5A58;
-            }
-            p {
-              margin: 15px 0;
-              font-size: 15px;
-            }
-            .steps {
-              background: #F5F1EC;
-              padding: 20px;
-              margin: 25px 0;
-              border-left: 3px solid #3D5A58;
-            }
-            .steps ol {
-              margin: 10px 0;
-              padding-left: 20px;
-            }
-            .steps li {
-              margin: 10px 0;
-              font-size: 15px;
-            }
-            .footer {
-              margin-top: 40px;
-              padding-top: 20px;
-              border-top: 1px solid #E5E5E5;
-              font-size: 13px;
-              color: #666;
-            }
-            .signature {
-              margin: 30px 0;
-              font-size: 15px;
-            }
-            strong {
-              font-weight: 600;
-              color: #3D5A58;
-            }
-            .note {
-              font-style: italic;
-              color: #666;
-              font-size: 14px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <div class="logo">Hampstead Architects</div>
-            <div style="font-size: 12px; color: #666;">Part of the Hampstead Renovations Group</div>
-          </div>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1E1E1E; max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { border-bottom: 2px solid #3D5A58; padding-bottom: 20px; margin-bottom: 30px; }
+              .logo { font-family: Georgia, serif; font-size: 24px; color: #1E1E1E; letter-spacing: -0.5px; }
+              .subtitle { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+              .content { margin-bottom: 30px; }
+              .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #999; margin-bottom: 5px; }
+              .value { font-size: 16px; margin-bottom: 20px; }
+              .highlight { background: #F5F1EC; padding: 20px; border-left: 3px solid #3D5A58; margin: 30px 0; }
+              .steps { margin: 30px 0; }
+              .step { margin-bottom: 20px; padding-left: 30px; position: relative; }
+              .step-number { position: absolute; left: 0; top: 0; background: #3D5A58; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+              .footer { border-top: 1px solid #E5E5E5; padding-top: 20px; margin-top: 40px; font-size: 12px; color: #666; }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <div class="logo">Hampstead Architects</div>
+              <div class="subtitle">& Interiors</div>
+            </div>
 
-          <p><strong>Dear ${name},</strong></p>
+            <div class="content">
+              <h2 style="font-family: Georgia, serif; font-weight: 300; font-size: 28px; margin-bottom: 20px;">Case File Opened</h2>
 
-          <p>We have successfully received your preliminary brief for the property at <strong>${postcode}</strong>.</p>
+              <p>Dear ${name},</p>
 
-          <p>Thank you for providing the initial details regarding the <strong>${projectTypeName}</strong>. ${conservationArea === 'Yes' ? 'Given your indication that this property is located within a Conservation Area, we have flagged this for immediate review by our Senior Planning Consultant.' : 'We have flagged this as a potential structural project requiring specialist architectural input.'}</p>
+              <p>Thank you for submitting your project brief through our architectural concierge service. We have received your inquiry for a <strong>${projectTypeLabels[projectType] || projectType}</strong> at <strong>${postcode}</strong>${conservationArea === 'Yes' ? ' (conservation area)' : ''}.</p>
 
-          <h1>What happens next?</h1>
+              ${conservationArea === 'Yes' ? `
+              <div class="highlight">
+                <p style="margin: 0;"><strong>Conservation Area Notice:</strong> We note your property is in a conservation area. We will match you with a specialist architect experienced in securing Camden Planning consent for heritage-sensitive sites.</p>
+              </div>
+              ` : ''}
 
-          <p>We do not believe in automated quotes. Architecture in North London is nuanced, and your specific requirements deserve a considered response.</p>
+              <div class="steps">
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Your Next Steps</h3>
 
-          <div class="steps">
-            <ol>
-              <li><strong>Technical Review:</strong> Over the next 24 hours, our team will review the planning history of the street and the specific constraints of the site.</li>
-              <li><strong>The Feasibility Call:</strong> We will contact you at <strong>${phone}</strong> to discuss the "Buildability" of your vision and budget alignment.</li>
-              <li><strong>The Match:</strong> Based on this conversation, we will propose the specific architectural partner best suited to deliver this project.</li>
-            </ol>
-          </div>
+                <div class="step">
+                  <div class="step-number">1</div>
+                  <strong>Feasibility Review (24-48 hours)</strong>
+                  <p style="margin: 5px 0 0 0; color: #666;">Our team will review your site constraints, planning status, and project scope.</p>
+                </div>
 
-          <p>You do not need to take any further action at this stage.</p>
+                <div class="step">
+                  <div class="step-number">2</div>
+                  <strong>Architect Selection</strong>
+                  <p style="margin: 5px 0 0 0; color: #666;">We will identify 2-3 specialist architects from our network whose expertise matches your specific requirements.</p>
+                </div>
 
-          <p>We look forward to speaking with you.</p>
+                <div class="step">
+                  <div class="step-number">3</div>
+                  <strong>Consultation at Palace Court</strong>
+                  <p style="margin: 5px 0 0 0; color: #666;">You'll meet the architects, review precedent work, and select your preferred design partner.</p>
+                </div>
+              </div>
 
-          <div class="signature">
-            <p>Sincerely,</p>
-            <p><strong>The Studio Team</strong></p>
-          </div>
+              <p>We will contact you within 24 hours to schedule your consultation via <strong>${consultationMethod}</strong>.</p>
 
-          <div class="footer">
-            <p><strong>Hampstead Architects</strong><br>
-            <em>Part of the Hampstead Renovations Group</em></p>
-            <p><strong>Studio:</strong> Palace Court, 250 Finchley Rd, London NW3 6DN<br>
-            <strong>Web:</strong> <a href="https://hampsteadarchitects.com" style="color: #3D5A58;">www.hampstead-architects.com</a></p>
-            <p class="note">We prioritize buildability. Every design we oversee is stress-tested for real-world execution.</p>
-          </div>
-        </body>
+              <p style="margin-top: 30px;">
+                Best regards,<br>
+                <strong>The Studio at Palace Court</strong><br>
+                Hampstead Architects & Interiors
+              </p>
+            </div>
+
+            <div class="footer">
+              <p style="margin: 0 0 10px 0;"><strong>Palace Court</strong><br>250 Finchley Road, London NW3 6DN</p>
+              <p style="margin: 0 0 10px 0;">020 7123 4567 • <a href="mailto:private-clients@hampsteadarchitects.com" style="color: #3D5A58;">private-clients@hampsteadarchitects.com</a></p>
+              <p style="margin: 15px 0 0 0; font-size: 11px; color: #999;">🤖 Generated with <a href="https://claude.com/claude-code" style="color: #999;">Claude Code</a></p>
+            </div>
+          </body>
         </html>
       `,
-      text: `Dear ${name},
+      text: `
+Dear ${name},
 
-We have successfully received your preliminary brief for the property at ${postcode}.
+Thank you for submitting your project brief through our architectural concierge service.
 
-Thank you for providing the initial details regarding the ${projectTypeName}. ${conservationArea === 'Yes' ? 'Given your indication that this property is located within a Conservation Area, we have flagged this for immediate review by our Senior Planning Consultant.' : 'We have flagged this as a potential structural project requiring specialist architectural input.'}
+PROJECT DETAILS
+----------------
+Type: ${projectTypeLabels[projectType] || projectType}
+Location: ${postcode}
+Planning Status: ${planningStatusLabels[planningStatus] || planningStatus}
+Budget: ${budgetLabels[budget] || budget}
+Conservation Area: ${conservationArea}
+Freehold Status: ${freeholdStatus}
 
-WHAT HAPPENS NEXT?
+YOUR NEXT STEPS
+---------------
+1. Feasibility Review (24-48 hours)
+   Our team will review your site constraints, planning status, and project scope.
 
-We do not believe in automated quotes. Architecture in North London is nuanced, and your specific requirements deserve a considered response.
+2. Architect Selection
+   We will identify 2-3 specialist architects from our network whose expertise matches your specific requirements.
 
-1. Technical Review: Over the next 24 hours, our team will review the planning history of the street and the specific constraints of the site.
+3. Consultation at Palace Court
+   You'll meet the architects, review precedent work, and select your preferred design partner.
 
-2. The Feasibility Call: We will contact you at ${phone} to discuss the "Buildability" of your vision and budget alignment.
+We will contact you within 24 hours to schedule your consultation via ${consultationMethod}.
 
-3. The Match: Based on this conversation, we will propose the specific architectural partner best suited to deliver this project.
+Best regards,
+The Studio at Palace Court
+Hampstead Architects & Interiors
 
-You do not need to take any further action at this stage.
+Palace Court
+250 Finchley Road, London NW3 6DN
+020 7123 4567 • private-clients@hampsteadarchitects.com
 
-We look forward to speaking with you.
-
-Sincerely,
-
-The Studio Team
-
----
-Hampstead Architects
-Part of the Hampstead Renovations Group
-
-Studio: Palace Court, 250 Finchley Rd, London NW3 6DN
-Web: www.hampstead-architects.com
-
-Note: We prioritize buildability. Every design we oversee is stress-tested for real-world execution.`,
+🤖 Generated with Claude Code (https://claude.com/claude-code)
+      `,
     });
 
-    // Send internal notification email to team
+    // Send team notification email
     const teamEmail = await resend.emails.send({
-      from: 'Project Inquiry System <inquiries@hampsteadarchitects.com>',
+      from: 'Hampstead Architects <inquiries@hampsteadarchitects.com>',
       to: ['private-clients@hampsteadarchitects.com'],
-      subject: `🏗️ New Inquiry: ${projectTypeName} at ${postcode}`,
+      subject: `🏗️ New Inquiry: ${projectTypeLabels[projectType] || projectType} at ${postcode}`,
       html: `
         <!DOCTYPE html>
         <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-              line-height: 1.6;
-              color: #1E1E1E;
-              max-width: 700px;
-              margin: 0 auto;
-              padding: 20px;
-            }
-            .header {
-              background: #3D5A58;
-              color: white;
-              padding: 20px;
-              margin: -20px -20px 30px -20px;
-            }
-            .section {
-              margin: 20px 0;
-              padding: 15px;
-              background: #F5F1EC;
-              border-left: 4px solid #3D5A58;
-            }
-            .field {
-              margin: 10px 0;
-            }
-            .label {
-              font-weight: 600;
-              color: #3D5A58;
-              display: inline-block;
-              width: 200px;
-            }
-            .value {
-              display: inline-block;
-            }
-            .urgent {
-              background: #FFF3CD;
-              border-left-color: #FF9800;
-              padding: 15px;
-              margin: 20px 0;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1 style="margin: 0;">New Project Inquiry</h1>
-            <p style="margin: 5px 0 0 0; opacity: 0.9;">Case file opened at ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
-          </div>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace; line-height: 1.6; color: #1E1E1E; max-width: 700px; margin: 0 auto; padding: 20px; background: #F5F1EC; }
+              .container { background: white; padding: 30px; border-left: 4px solid #3D5A58; }
+              .header { border-bottom: 2px solid #3D5A58; padding-bottom: 15px; margin-bottom: 25px; }
+              h1 { font-size: 24px; margin: 0; font-weight: 600; }
+              .section { margin-bottom: 25px; }
+              .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #3D5A58; margin-bottom: 10px; font-weight: bold; }
+              .data-grid { display: grid; grid-template-columns: 150px 1fr; gap: 10px; }
+              .data-label { font-weight: bold; color: #666; }
+              .data-value { color: #1E1E1E; }
+              .highlight { background: #FFF9E6; border-left: 3px solid #F4A900; padding: 15px; margin: 20px 0; }
+              .action-required { background: #FFE6E6; border-left: 3px solid #D32F2F; padding: 15px; margin: 20px 0; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>🏗️ New Project Inquiry</h1>
+                <p style="margin: 5px 0 0 0; color: #666;">Received ${new Date().toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' })}</p>
+              </div>
 
-          <div class="section">
-            <h2 style="margin-top: 0;">Client Information</h2>
-            <div class="field"><span class="label">Name:</span><span class="value">${name}</span></div>
-            <div class="field"><span class="label">Email:</span><span class="value"><a href="mailto:${email}">${email}</a></span></div>
-            <div class="field"><span class="label">Phone:</span><span class="value"><a href="tel:${phone}">${phone}</a></span></div>
-            <div class="field"><span class="label">Preferred Contact:</span><span class="value">${consultationMethod}</span></div>
-          </div>
+              <div class="section">
+                <div class="section-title">Client Details</div>
+                <div class="data-grid">
+                  <div class="data-label">Name:</div>
+                  <div class="data-value">${name}</div>
+                  <div class="data-label">Email:</div>
+                  <div class="data-value"><a href="mailto:${email}">${email}</a></div>
+                  <div class="data-label">Phone:</div>
+                  <div class="data-value"><a href="tel:${phone}">${phone}</a></div>
+                  <div class="data-label">Consultation:</div>
+                  <div class="data-value">${consultationMethod}</div>
+                </div>
+              </div>
 
-          <div class="section">
-            <h2 style="margin-top: 0;">Project Details</h2>
-            <div class="field"><span class="label">Project Type:</span><span class="value">${projectTypeName}</span></div>
-            <div class="field"><span class="label">Planning Status:</span><span class="value">${planningStatus}</span></div>
-            <div class="field"><span class="label">Budget:</span><span class="value">${budgetName}</span></div>
-          </div>
+              <div class="section">
+                <div class="section-title">Project Details</div>
+                <div class="data-grid">
+                  <div class="data-label">Type:</div>
+                  <div class="data-value"><strong>${projectTypeLabels[projectType] || projectType}</strong></div>
+                  <div class="data-label">Planning Status:</div>
+                  <div class="data-value">${planningStatusLabels[planningStatus] || planningStatus}</div>
+                  <div class="data-label">Budget:</div>
+                  <div class="data-value"><strong>${budgetLabels[budget] || budget}</strong></div>
+                </div>
+              </div>
 
-          <div class="section">
-            <h2 style="margin-top: 0;">Property Information</h2>
-            <div class="field"><span class="label">Postcode:</span><span class="value"><strong>${postcode}</strong></span></div>
-            <div class="field"><span class="label">Conservation Area:</span><span class="value">${conservationArea}</span></div>
-            <div class="field"><span class="label">Freehold Status:</span><span class="value">${freeholdStatus}</span></div>
-          </div>
+              <div class="section">
+                <div class="section-title">Property Information</div>
+                <div class="data-grid">
+                  <div class="data-label">Postcode:</div>
+                  <div class="data-value"><strong>${postcode}</strong></div>
+                  <div class="data-label">Conservation Area:</div>
+                  <div class="data-value">${conservationArea}</div>
+                  <div class="data-label">Freehold Status:</div>
+                  <div class="data-value">${freeholdStatus}</div>
+                </div>
+              </div>
 
-          ${conservationArea === 'Yes' || freeholdStatus === 'leasehold' ? `
-          <div class="urgent">
-            <strong>⚠️ Action Required:</strong>
-            <ul style="margin: 10px 0;">
-              ${conservationArea === 'Yes' ? '<li>Conservation Area - Requires planning specialist review</li>' : ''}
-              ${freeholdStatus === 'leasehold' ? '<li>Leasehold property - Check License to Alter requirements</li>' : ''}
-            </ul>
-          </div>
-          ` : ''}
+              ${conservationArea === 'Yes' || freeholdStatus === 'leasehold' ? `
+              <div class="${conservationArea === 'Yes' ? 'highlight' : 'action-required'}">
+                <strong>⚠️ Special Considerations:</strong>
+                <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                  ${conservationArea === 'Yes' ? '<li>Conservation Area - Match with conservation specialist architect</li>' : ''}
+                  ${freeholdStatus === 'leasehold' ? '<li>Leasehold - Check License to Alter requirements with freeholder</li>' : ''}
+                </ul>
+              </div>
+              ` : ''}
 
-          <div style="margin-top: 30px; padding: 20px; background: #E8F5E9; border-left: 4px solid #4CAF50;">
-            <strong>Next Steps:</strong>
-            <ol style="margin: 10px 0;">
-              <li>Review planning history for ${postcode}</li>
-              <li>Schedule feasibility call within 24 hours</li>
-              <li>Match with appropriate architect from network</li>
-            </ol>
-          </div>
-        </body>
+              <div class="section">
+                <div class="section-title">Next Actions</div>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                  <li>Run postcode through Camden Planning portal for constraints</li>
+                  <li>Check conservation area designation (if "Unsure" was selected)</li>
+                  <li>Identify 2-3 specialist architects from network</li>
+                  <li>Schedule consultation within 24-48 hours</li>
+                  <li>Prepare precedent portfolio for client's project type</li>
+                </ul>
+              </div>
+
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #E5E5E5; font-size: 12px; color: #666;">
+                <p style="margin: 0;">Client confirmation email sent to: ${email}</p>
+                <p style="margin: 5px 0 0 0;">🤖 Automated via Hampstead Architects Inquiry System</p>
+              </div>
+            </div>
+          </body>
         </html>
+      `,
+      text: `
+NEW PROJECT INQUIRY
+Received: ${new Date().toLocaleString('en-GB')}
+
+CLIENT DETAILS
+--------------
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Consultation: ${consultationMethod}
+
+PROJECT DETAILS
+---------------
+Type: ${projectTypeLabels[projectType] || projectType}
+Planning Status: ${planningStatusLabels[planningStatus] || planningStatus}
+Budget: ${budgetLabels[budget] || budget}
+
+PROPERTY INFORMATION
+--------------------
+Postcode: ${postcode}
+Conservation Area: ${conservationArea}
+Freehold Status: ${freeholdStatus}
+
+${conservationArea === 'Yes' || freeholdStatus === 'leasehold' ? `
+SPECIAL CONSIDERATIONS
+----------------------
+${conservationArea === 'Yes' ? '⚠️ Conservation Area - Match with conservation specialist architect\n' : ''}${freeholdStatus === 'leasehold' ? '⚠️ Leasehold - Check License to Alter requirements\n' : ''}
+` : ''}
+
+NEXT ACTIONS
+------------
+- Run postcode through Camden Planning portal for constraints
+- Check conservation area designation
+- Identify 2-3 specialist architects from network
+- Schedule consultation within 24-48 hours
+- Prepare precedent portfolio for client's project type
+
+Client confirmation email sent to: ${email}
+🤖 Automated via Hampstead Architects Inquiry System
       `,
     });
 
-    // Return success response
     return res.status(200).json({
       success: true,
-      message: 'Inquiry submitted successfully',
       clientEmailId: clientEmail.data?.id,
       teamEmailId: teamEmail.data?.id,
     });
-
-  } catch (error) {
-    console.error('Error processing inquiry:', error);
-
+  } catch (error: any) {
+    console.error('Error sending emails:', error);
     return res.status(500).json({
-      error: 'Failed to process inquiry',
-      details: error instanceof Error ? error.message : 'Unknown error',
+      error: 'Failed to submit inquiry',
+      details: error.message
     });
   }
 }

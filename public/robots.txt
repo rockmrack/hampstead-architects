@@ -1,0 +1,23 @@
+# robots.txt for Hampstead Architects & Interiors
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://hampsteadarchitects.vercel.app/sitemap-index.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow admin/API endpoints
+Disallow: /api/
+Disallow: /_astro/
+
+# Allow all content pages
+Allow: /
+Allow: /portfolio
+Allow: /process
+Allow: /philosophy
+Allow: /services/
+Allow: /projects/
+Allow: /contact
