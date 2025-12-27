@@ -28,14 +28,37 @@ const categories = ['All', ...new Set(projects.map(p => p.data.category))];
           Selected Works
         </h1>
         <p class="text-2xl leading-relaxed text-charcoal/80 max-w-3xl">
-          Curated excellence. Each project matched to the right architect, delivered by Hampstead Renovations.
+          Curated excellence. Each project matched to the right specialist—architecture or interiors.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Filter Buttons -->
-  <section class="pb-16">
+  <!-- Portfolio Type Toggle -->
+  <section class="pb-8">
+    <div class="flex justify-center gap-0 px-6">
+      <button
+        type="button"
+        id="toggle-architecture"
+        class="portfolio-toggle px-8 py-3 text-sm uppercase tracking-wider border-2 border-charcoal bg-charcoal text-off-white transition-all duration-300"
+      >
+        Architecture
+      </button>
+      <button
+        type="button"
+        id="toggle-interiors"
+        class="portfolio-toggle px-8 py-3 text-sm uppercase tracking-wider border-2 border-charcoal/20 bg-transparent text-charcoal/60 hover:border-charcoal hover:text-charcoal transition-all duration-300"
+      >
+        Interiors
+      </button>
+    </div>
+    <p class="text-center mt-6 text-sm text-charcoal/60 italic">
+      <span id="portfolio-description">Wide angles, structure, light, raw materials</span>
+    </p>
+  </section>
+
+  <!-- Filter Buttons (Architecture only) -->
+  <section class="pb-16" id="category-filters">
     <div class="flex flex-wrap justify-center gap-3 px-6">
       {categories.map((category) => (
         <button
@@ -166,12 +189,20 @@ const categories = ['All', ...new Set(projects.map(p => p.data.category))];
 <script>
   const filterBtns = document.querySelectorAll('.filter-btn');
   const portfolioItems = document.querySelectorAll('.portfolio-item');
+  const toggleArchitecture = document.getElementById('toggle-architecture');
+  const toggleInteriors = document.getElementById('toggle-interiors');
+  const portfolioDescription = document.getElementById('portfolio-description');
+  const categoryFilters = document.getElementById('category-filters');
+  const portfolioGrid = document.getElementById('portfolio-grid');
+
+  let currentView = 'architecture';
 
   // Set first button as active
   if (filterBtns.length > 0) {
     filterBtns[0].classList.add('active');
   }
 
+  // Category filter logic (Architecture view)
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const filter = btn.getAttribute('data-filter');
@@ -193,5 +224,70 @@ const categories = ['All', ...new Set(projects.map(p => p.data.category))];
         }
       });
     });
+  });
+
+  // Portfolio type toggle logic
+  toggleArchitecture?.addEventListener('click', () => {
+    if (currentView === 'architecture') return;
+
+    currentView = 'architecture';
+
+    // Update toggle buttons
+    toggleArchitecture.classList.remove('bg-transparent', 'text-charcoal/60', 'border-charcoal/20');
+    toggleArchitecture.classList.add('bg-charcoal', 'text-off-white', 'border-charcoal');
+
+    toggleInteriors?.classList.remove('bg-charcoal', 'text-off-white', 'border-charcoal');
+    toggleInteriors?.classList.add('bg-transparent', 'text-charcoal/60', 'border-charcoal/20');
+
+    // Update description
+    if (portfolioDescription) {
+      portfolioDescription.textContent = 'Wide angles, structure, light, raw materials';
+    }
+
+    // Show category filters and portfolio grid
+    if (categoryFilters) {
+      categoryFilters.classList.remove('hidden');
+    }
+    if (portfolioGrid) {
+      portfolioGrid.classList.remove('hidden');
+    }
+  });
+
+  toggleInteriors?.addEventListener('click', () => {
+    if (currentView === 'interiors') return;
+
+    currentView = 'interiors';
+
+    // Update toggle buttons
+    toggleInteriors.classList.remove('bg-transparent', 'text-charcoal/60', 'border-charcoal/20');
+    toggleInteriors.classList.add('bg-charcoal', 'text-off-white', 'border-charcoal');
+
+    toggleArchitecture?.classList.remove('bg-charcoal', 'text-off-white', 'border-charcoal');
+    toggleArchitecture?.classList.add('bg-transparent', 'text-charcoal/60', 'border-charcoal/20');
+
+    // Update description
+    if (portfolioDescription) {
+      portfolioDescription.textContent = 'Close-ups, textures, fabrics, joinery details';
+    }
+
+    // Hide category filters (interiors don't have categories yet)
+    if (categoryFilters) {
+      categoryFilters.classList.add('hidden');
+    }
+
+    // Show coming soon message
+    if (portfolioGrid) {
+      portfolioGrid.innerHTML = `
+        <div class="text-center py-32">
+          <h3 class="text-3xl font-serif font-light mb-6 text-charcoal">Interior Portfolio Coming Soon</h3>
+          <p class="text-lg text-charcoal/70 max-w-2xl mx-auto mb-8">
+            We're currently photographing our recent interior projects. Check back soon to see close-ups of bespoke joinery, curated furnishings, and styled spaces.
+          </p>
+          <a href="/services/interior-design" class="inline-block px-8 py-3 bg-charcoal text-off-white hover:bg-oxidized-copper transition-colors text-sm uppercase tracking-wider">
+            Learn About Our Interior Service
+          </a>
+        </div>
+      `;
+    }
   });
 </script>

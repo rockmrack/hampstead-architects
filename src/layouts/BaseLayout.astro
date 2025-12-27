@@ -9,12 +9,12 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
-  schemaType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
+  schemaType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage' | 'Service';
 }
 
 const {
-  title = 'Hampstead Architects - Architecture, Curated',
-  description = 'We do not just design; we assemble the perfect team. Gateway to North London\'s finest architectural talent for Grade II listed restorations and modern basement excavations.',
+  title = 'Hampstead Architects & Interiors - From Structural Concept to Final Furnishing',
+  description = 'Curated architecture and luxury interior design in Hampstead. We match you with London\'s finest specialists and handle everything from planning to FF&E procurement.',
   image = '/images/og-image.jpg',
   schemaType = 'WebPage'
 } = Astro.props;
@@ -26,7 +26,8 @@ const imageURL = new URL(image, Astro.site);
 const architectureSchema = {
   "@context": "https://schema.org",
   "@type": "ArchitectureFirm",
-  "name": "Hampstead Architects",
+  "name": "Hampstead Architects & Interiors",
+  "alternateName": "Hampstead Architects",
   "parentOrganization": {
     "@type": "Organization",
     "name": "Hampstead Renovations Group"
@@ -53,11 +54,44 @@ const architectureSchema = {
     "Basement Excavation",
     "Sustainable Retrofit",
     "Camden Planning",
-    "English Heritage"
+    "English Heritage",
+    "Interior Design",
+    "FF&E Procurement",
+    "Luxury Furnishings"
   ],
   "areaServed": {
     "@type": "City",
     "name": "Hampstead, London"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Design Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Architectural Design",
+          "description": "Curated architectural services for new builds, extensions, and heritage restorations"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Luxury Interior Design",
+          "description": "Bespoke interior styling and space planning matched to your aesthetic vision"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "FF&E Procurement",
+          "description": "Furniture, fixtures, and equipment sourcing with trade pricing from Europe's finest manufacturers"
+        }
+      }
+    ]
   }
 };
 
