@@ -10,7 +10,9 @@
       "Bash(git push:*)",
       "Bash(git commit:*)",
       "Bash(npm install:*)",
-      "Bash(npx astro build:*)"
+      "Bash(npx astro build:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git restore:*)"
     ]
   }
 }

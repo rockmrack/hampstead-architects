@@ -98,12 +98,30 @@ export default function InquiryWizard() {
   };
 
   const handleSubmit = async () => {
-    // Redirect to success page with data in URL params for personalization
-    const params = new URLSearchParams({
-      postcode: data.postcode,
-      projectType: data.projectType,
-    });
-    window.location.href = `/inquiry-success?${params.toString()}`;
+    try {
+      // Submit data to API endpoint
+      const response = await fetch('/api/submit-inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit inquiry');
+      }
+
+      // Redirect to success page with data in URL params for personalization
+      const params = new URLSearchParams({
+        postcode: data.postcode,
+        projectType: data.projectType,
+      });
+      window.location.href = `/inquiry-success?${params.toString()}`;
+    } catch (error) {
+      console.error('Error submitting inquiry:', error);
+      alert('There was an error submitting your inquiry. Please try again or contact us directly at hello@hampsteadarchitects.co.uk');
+    }
   };
 
   return (
