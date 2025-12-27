@@ -4,34 +4,63 @@ const testimonials = [
     quote: "The team at Hampstead Architects understood exactly what we needed for our Grade II listed restoration. They matched us with an architect who specialized in Georgian properties, and the result exceeded our expectations. Camden Planning approved on the first submission.",
     author: "Sarah & James Mitchell",
     project: "Frognal Restoration, NW3",
-    year: "2023"
+    year: "2023",
+    rating: 5
   },
   {
     quote: "Navigating party wall agreements for our basement excavation was incredibly complex. Hampstead Architects assembled a team of specialists who handled everything seamlessly. Our neighbors were kept informed, and there were zero disputes.",
     author: "Dr. Rebecca Thornton",
     project: "Primrose Hill Basement, NW1",
-    year: "2023"
+    year: "2023",
+    rating: 5
   },
   {
     quote: "We wanted contemporary architecture in the heart of Hampstead Village Conservation Area. Everyone said it was impossible. Hampstead Architects found an architect who achieved what others said couldn't be done - unanimous planning approval for a modern design.",
     author: "Marcus Chen",
     project: "Hampstead Village Mews, NW3",
-    year: "2024"
+    year: "2024",
+    rating: 5
   },
   {
     quote: "The Hampstead Garden Suburb Trust is notoriously strict. Our previous architect's application was rejected twice. Hampstead Architects connected us with an Arts & Crafts specialist, and we won a Design Award. The difference in expertise was night and day.",
     author: "Eleanor & David Hart",
     project: "Garden Suburb Restoration, NW11",
-    year: "2022"
+    year: "2022",
+    rating: 5
   },
   {
     quote: "From concept to completion, the curation model works brilliantly. We had one point of contact who coordinated our architect, structural engineer, and the build team. No communication gaps, no delays, no stress.",
     author: "Olivia Pemberton",
     project: "Swiss Cottage Penthouse, NW3",
-    year: "2023"
+    year: "2023",
+    rating: 5
   }
 ];
+
+// Generate review schema for SEO
+const reviewSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Hampstead Architects & Interiors",
+  "review": testimonials.map(testimonial => ({
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": testimonial.author
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": testimonial.rating,
+      "bestRating": 5
+    },
+    "reviewBody": testimonial.quote,
+    "datePublished": `${testimonial.year}-12-31`
+  }))
+};
 ---
+
+<!-- Review Schema Markup for SEO -->
+<script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />
 
 <section class="section-padding bg-warm-stone overflow-hidden" aria-labelledby="testimonials-heading">
   <div class="max-w-5xl mx-auto px-6 md:px-12">
