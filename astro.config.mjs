@@ -7,7 +7,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   integrations: [tailwind(), preact(), sitemap()],
   site: 'https://hampsteadarchitects.vercel.app', // Update with your custom domain once configured
-  base: '/design',
   output: 'static',
   compressHTML: true,
   build: {

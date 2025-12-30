@@ -8,9 +8,6 @@
   "git": {
     "deploymentEnabled": true
   },
-  "redirects": [
-    { "source": "/", "destination": "/design", "permanent": true }
-  ],
   "headers": [
     {
       "source": "/fonts/(.*)",
