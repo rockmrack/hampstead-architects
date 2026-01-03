@@ -16,8 +16,7 @@
   html {
     scroll-behavior: auto;
     /* Lenis will handle smooth scroll */
-    cursor: none;
-    /* Custom cursor will replace */
+    cursor: auto;
   }
 
   body {
@@ -97,6 +96,7 @@
     z-index: 9999;
     transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     mix-blend-mode: difference;
+    display: none;
   }
 
   .custom-cursor.expand {
@@ -151,5 +151,16 @@
   /* Text Balance for Headlines */
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Cursor Logic - Top Level */
+@media (pointer: fine) {
+  html {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    display: block;
   }
 }

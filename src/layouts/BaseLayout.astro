@@ -231,10 +231,9 @@ const pageSchema = {
         });
       });
 
-      // Hide cursor on mobile/touch devices
-      if ('ontouchstart' in window) {
-        cursor?.style.setProperty('display', 'none');
-      }
+
+
+      // Touch detection is now handled by CSS @media (pointer: fine)
     </script>
 
     <style>
