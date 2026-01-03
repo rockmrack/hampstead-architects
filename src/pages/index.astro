@@ -1,194 +1,107 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Expertise from '../components/Expertise.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Team from '../components/Team.astro';
 ---
-
 <BaseLayout
   title="Hampstead Architects & Interiors - From Structural Concept to Final Furnishing"
   description="Curated architecture and interior design services. We match your project with specialist architects and interior designers, from Grade II listed restorations to luxury furniture procurement."
 >
   <!-- Hero Section -->
-  <section class="section-padding min-h-screen flex items-center" aria-labelledby="hero-heading">
-    <div class="grid-editorial w-full">
-      <!-- Left: Headline -->
-      <div class="col-span-12 lg:col-span-6 flex items-center">
-        <h1 id="hero-heading" class="text-balance font-serif font-extralight">
-          Architecture,<br>Curated.
-        </h1>
-      </div>
-
-      <!-- Right: Ambient Video -->
-      <div class="col-span-12 lg:col-span-6 mt-12 lg:mt-0">
-        <div class="img-framed aspect-[4/5] overflow-hidden bg-warm-stone">
-          <video
-            autoplay
-            muted
-            loop
-            playsinline
-            class="w-full h-full object-cover opacity-80"
-            aria-label="Ambient video of light moving across architectural textures"
-          >
-            <source src="/videos/light-texture.mp4" type="video/mp4" />
-            <!-- Fallback image -->
-            <img src="/images/hero-fallback.jpg" alt="Light on architectural texture" class="w-full h-full object-cover" />
-          </video>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Hero />
 
   <!-- The Manifesto / Hook Section -->
-  <section class="section-padding bg-warm-stone" aria-labelledby="manifesto-heading">
+  <section class="section-padding bg-warm-stone/20" aria-labelledby="manifesto-heading">
     <div class="grid-editorial">
       <div class="col-span-12 lg:col-span-8 lg:col-start-3">
-        <h2 id="manifesto-heading" class="text-balance whitespace-luxury">
-          We don't impose a style. We find yours.
+        <h2 id="manifesto-heading" class="text-balance whitespace-luxury text-4xl md:text-5xl lg:text-6xl text-charcoal">
+          We don't impose a style. <span class="italic text-bronze">We find yours.</span>
         </h2>
 
-        <div class="prose prose-lg max-w-none space-y-6">
-          <p class="text-xl leading-relaxed">
+        <div class="prose prose-lg max-w-none space-y-8 font-serif leading-relaxed text-charcoal/80">
+          <p class="text-xl md:text-2xl font-light">
             Most architectural firms are limited by their own signature style. If you want Minimalism, but they specialize in Heritage, your home suffers.
           </p>
 
-          <p class="leading-relaxed">
+          <p>
             <strong>Hampstead Architects & Interiors</strong> operates differently. We function as your <strong>Architectural Private Office</strong>.
           </p>
 
-          <p class="leading-relaxed">
+          <p>
             We maintain a closed, vetted network of North West London's finest creative studios—from award-winning modernists in Swiss Cottage to heritage restoration experts in Hampstead Village.
           </p>
 
-          <p class="leading-relaxed">
+          <p>
             We analyze your brief, your personality, and your property. Then, we present you with a shortlist of the perfect creative partners. You choose the vision that moves you; we ensure it gets built correctly.
           </p>
         </div>
 
-        <a href="/process" class="btn-primary mt-12">
-          Discover Our Process
+        <a href="/process" class="btn-primary mt-12 group relative overflow-hidden">
+          <span class="relative z-10">Discover Our Process</span>
+          <div class="absolute inset-0 bg-bronze transform -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0"></div>
         </a>
       </div>
     </div>
   </section>
 
   <!-- Expertise Highlights -->
-  <section class="section-padding" aria-labelledby="expertise-heading">
-    <div class="grid-editorial">
-      <div class="col-span-12 mb-16">
-        <h2 id="expertise-heading" class="text-balance">Our Specialisms</h2>
-      </div>
-
-      <!-- Conservation Areas -->
-      <article class="col-span-12 md:col-span-4 group">
-        <div class="mb-6 overflow-hidden img-framed aspect-square">
-          <img
-            src="/images/conservation.jpg"
-            alt="Grade II listed building restoration in Hampstead"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-        </div>
-        <h3 class="text-2xl mb-3">Conservation Areas</h3>
-        <p class="text-charcoal/70 leading-relaxed">
-          Expert navigation of English Heritage requirements, Camden Planning, and the Hampstead Garden Suburb Trust.
-        </p>
-      </article>
-
-      <!-- Basement Engineering -->
-      <article class="col-span-12 md:col-span-4 group mt-12 md:mt-0">
-        <div class="mb-6 overflow-hidden img-framed aspect-square">
-          <img
-            src="/images/basement.jpg"
-            alt="Modern basement excavation and structural engineering"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-        </div>
-        <h3 class="text-2xl mb-3">Basement Excavation</h3>
-        <p class="text-charcoal/70 leading-relaxed">
-          Structural integrity protection during deep excavations. We reassure your neighbours and deliver on our promises.
-        </p>
-      </article>
-
-      <!-- Sustainable Retrofit -->
-      <article class="col-span-12 md:col-span-4 group mt-12 md:mt-0">
-        <div class="mb-6 overflow-hidden img-framed aspect-square">
-          <img
-            src="/images/sustainable.jpg"
-            alt="Sustainable retrofit and energy-efficient design"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-        </div>
-        <h3 class="text-2xl mb-3">Sustainable Retrofit</h3>
-        <p class="text-charcoal/70 leading-relaxed">
-          Future-proofing period properties with cutting-edge insulation, heat pumps, and energy performance upgrades.
-        </p>
-      </article>
-    </div>
-  </section>
+  <Expertise />
 
   <!-- Why We Win Where Others Fail -->
-  <section class="section-padding bg-oxidized-copper text-cream" aria-labelledby="ai-advantage-heading">
+  <section class="section-padding bg-oxidized-copper text-off-white" aria-labelledby="ai-advantage-heading">
     <div class="max-w-5xl mx-auto px-6 md:px-12">
-      <h2 id="ai-advantage-heading" class="text-3xl md:text-4xl font-serif font-light mb-8 text-center">
-        Why We Win Where Others Fail
+      <h2 id="ai-advantage-heading" class="text-4xl md:text-5xl lg:text-6xl font-serif font-light mb-16 text-center">
+        Why We Win <span class="italic text-bronze drop-shadow-md">Where Others Fail</span>
       </h2>
 
-      <div class="max-w-3xl mx-auto space-y-6 text-lg leading-relaxed">
-        <p class="text-center text-xl font-light mb-8">
-          Most architects guess. We use <strong>proprietary AI technology</strong> to analyze thousands of Camden Council decisions, finding the exact "winning precedents" to support your application.
+      <div class="max-w-4xl mx-auto space-y-8 text-lg leading-relaxed mix-blend-lighten">
+        <p class="text-center text-2xl font-light mb-12 text-off-white/90">
+          Most architects guess. We use <strong class="text-off-white font-medium">proprietary AI technology</strong> to analyze thousands of Camden Council decisions, finding the exact "winning precedents" to support your application.
         </p>
 
-        <div class="bg-cream/10 border border-cream/20 p-8 md:p-10">
-          <p class="text-xl text-cream/95 font-light leading-relaxed mb-6">
+        <div class="bg-white/5 border border-white/10 p-8 md:p-12 rounded-sm backdrop-blur-sm">
+          <p class="text-2xl text-off-white/95 font-serif italic mb-8">
             We don't just hope for approval; we <strong>engineer</strong> it.
           </p>
 
-          <div class="space-y-4 text-base text-cream/90">
+          <div class="space-y-6 text-base md:text-lg text-off-white/80">
             <div class="flex items-start gap-4">
-              <svg class="w-6 h-6 text-cream flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <span class="text-bronze mt-1">✦</span>
               <p>
-                <strong>Predictive modeling:</strong> Our AI scans 15+ years of Camden planning decisions, identifying approval patterns by property type, conservation area, and design approach.
+                <strong class="text-off-white">Predictive modeling:</strong> Our AI scans 15+ years of Camden planning decisions, identifying approval patterns by property type, conservation area, and design approach.
               </p>
             </div>
 
             <div class="flex items-start gap-4">
-              <svg class="w-6 h-6 text-cream flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+               <span class="text-bronze mt-1">✦</span>
               <p>
-                <strong>Winning precedents:</strong> We cite approved applications similar to yours—same street, same typology, same officer. Camden Planning can't reject what they've already approved next door.
+                <strong class="text-off-white">Winning precedents:</strong> We cite approved applications similar to yours—same street, same typology, same officer. Camden Planning can't reject what they've already approved next door.
               </p>
             </div>
 
             <div class="flex items-start gap-4">
-              <svg class="w-6 h-6 text-cream flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <span class="text-bronze mt-1">✦</span>
               <p>
-                <strong>Risk-scoring:</strong> Before you invest £20-40k in architectural drawings, we score your proposal's approval probability (0-100%). If it's below 70%, we redesign before submission.
+                <strong class="text-off-white">Risk-scoring:</strong> Before you invest £20-40k in architectural drawings, we score your proposal's approval probability (0-100%). If it's below 70%, we redesign before submission.
               </p>
             </div>
 
             <div class="flex items-start gap-4">
-              <svg class="w-6 h-6 text-cream flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <span class="text-bronze mt-1">✦</span>
               <p>
-                <strong>Officer profiling:</strong> We know which conservation officers are assigned to your postcode. We tailor applications to their documented preferences and past decision patterns.
+                <strong class="text-off-white">Officer profiling:</strong> We know which conservation officers are assigned to your postcode. We tailor applications to their documented preferences and past decision patterns.
               </p>
             </div>
           </div>
         </div>
 
-        <div class="text-center mt-10 pt-8 border-t border-cream/20">
-          <p class="text-2xl font-serif font-light mb-4">
-            Our planning approval rate: <strong>98.7%</strong>
+        <div class="text-center mt-12 pt-8 border-t border-white/10">
+          <p class="text-3xl md:text-4xl font-serif font-light mb-4">
+            Our planning approval rate: <strong class="text-bronze">98.7%</strong>
           </p>
-          <p class="text-base text-cream/80">
+          <p class="text-base text-off-white/60 uppercase tracking-widest">
             Industry average in conservation areas: 62%
           </p>
         </div>
@@ -203,25 +116,26 @@ import Team from '../components/Team.astro';
   <Testimonials />
 
   <!-- Hampstead Renovations Badge -->
-  <section class="section-padding bg-oxidized-copper text-off-white text-center" aria-label="Hampstead Renovations Group">
+  <section class="section-padding bg-charcoal text-off-white text-center pb-24" aria-label="Hampstead Renovations Group">
     <div class="max-w-2xl mx-auto">
-      <p class="font-serif text-3xl mb-4">Powered by Hampstead Renovations</p>
-      <p class="text-lg opacity-90">
+      <p class="font-serif text-3xl md:text-4xl mb-6 text-off-white/90">Powered by Hampstead Renovations</p>
+      <p class="text-xl opacity-70 font-light mb-8">
         We design what we can build. From concept to completion, under one roof.
       </p>
-      <a href="https://hampsteadrenovations.co.uk" class="inline-block mt-8 px-8 py-3 border border-off-white text-off-white hover:bg-off-white hover:text-oxidized-copper transition-colors">
+      <a href="https://hampsteadrenovations.co.uk" class="inline-block px-10 py-4 border border-white/20 text-off-white hover:bg-white hover:text-charcoal transition-all duration-300 uppercase tracking-widest text-sm">
         Visit Hampstead Renovations
       </a>
     </div>
   </section>
 
   <!-- Final CTA -->
-  <section class="section-padding text-center" aria-labelledby="cta-heading">
-    <h2 id="cta-heading" class="text-balance mb-8">
-      Ready to find your perfect architect?
+  <section class="section-padding text-center bg-off-white" aria-labelledby="cta-heading">
+    <h2 id="cta-heading" class="text-balance mb-8 text-4xl md:text-5xl lg:text-6xl text-charcoal">
+      Ready to find your <span class="italic text-bronze">perfect architect?</span>
     </h2>
-    <a href="/contact" class="btn-primary">
-      Book a Consultation at Palace Court
+    <a href="/contact" class="btn-primary text-lg px-10 py-4 group relative overflow-hidden">
+      <span class="relative z-10">Book a Consultation at Palace Court</span>
+      <div class="absolute inset-0 bg-bronze transform -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0"></div>
     </a>
   </section>
 </BaseLayout>
@@ -230,10 +144,10 @@ import Team from '../components/Team.astro';
   /* Prose styling for manifesto section */
   .prose em {
     font-style: italic;
-    color: theme('colors.oxidized-copper');
+    color: theme('colors.bronze');
   }
 
   .prose p {
-    @apply text-charcoal/80;
+    /* @apply text-charcoal/80;  Already applied classes*/ 
   }
 </style>

@@ -8,10 +8,11 @@ export default {
         'warm-stone': '#E6E2DD',
         'charcoal': '#1A1A1A',
         'oxidized-copper': '#3D5A58',
+        'bronze': '#9A7B4F', // New premium accent
       },
       fontFamily: {
-        'serif': ['Editorial New', 'Canela', 'Georgia', 'serif'],
-        'sans': ['Suisse Intl', 'Inter', 'system-ui', 'sans-serif'],
+        'serif': ['Cormorant Garamond', 'serif'],
+        'sans': ['Outfit', 'sans-serif'],
       },
       spacing: {
         'section': 'clamp(4rem, 12vw, 10rem)',

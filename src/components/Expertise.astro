@@ -1,0 +1,48 @@
+---
+const expertiseItems = [
+  {
+    title: "Conservation Areas",
+    description: "Expert navigation of English Heritage requirements, Camden Planning, and the Hampstead Garden Suburb Trust.",
+    image: "/images/conservation.jpg",
+    alt: "Grade II listed building restoration in Hampstead"
+  },
+  {
+    title: "Basement Excavation",
+    description: "Structural integrity protection during deep excavations. We reassure your neighbours and deliver on our promises.",
+    image: "/images/basement.jpg",
+    alt: "Modern basement excavation and structural engineering"
+  },
+  {
+    title: "Sustainable Retrofit",
+    description: "Future-proofing period properties with cutting-edge insulation, heat pumps, and energy performance upgrades.",
+    image: "/images/sustainable.jpg",
+    alt: "Sustainable retrofit and energy-efficient design"
+  }
+];
+---
+
+<section class="section-padding bg-off-white" aria-labelledby="expertise-heading">
+  <div class="grid-editorial">
+    <div class="col-span-12 mb-16 md:mb-24">
+      <h2 id="expertise-heading" class="text-balance text-4xl md:text-5xl lg:text-6xl">Our Specialisms</h2>
+    </div>
+
+    {expertiseItems.map((item, index) => (
+      <article class={`col-span-12 md:col-span-4 group ${index > 0 ? 'mt-12 md:mt-0' : ''}`}>
+        <div class="mb-8 overflow-hidden img-framed aspect-square relative">
+          <div class="absolute inset-0 bg-bronze/0 group-hover:bg-bronze/10 transition-colors duration-500 z-10"></div>
+          <img
+            src={item.image}
+            alt={item.alt}
+            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 will-change-transform"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="text-2xl md:text-3xl mb-4 font-normal group-hover:text-bronze transition-colors duration-300">{item.title}</h3>
+        <p class="text-charcoal/70 leading-relaxed text-sm md:text-base border-l-2 border-transparent pl-0 group-hover:border-bronze group-hover:pl-4 transition-all duration-300">
+          {item.description}
+        </p>
+      </article>
+    ))}
+  </div>
+</section>

@@ -12,7 +12,8 @@
       "Bash(npm install:*)",
       "Bash(npx astro build:*)",
       "Bash(npm uninstall:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(git rm:*)"
     ]
   }
 }
