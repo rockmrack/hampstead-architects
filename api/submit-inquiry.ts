@@ -127,8 +127,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </div>
 
             <div class="footer">
-              <p style="margin: 0 0 10px 0;"><strong>Palace Court</strong><br>250 Finchley Road, London NW3 6DN</p>
-              <p style="margin: 0 0 10px 0;">020 7123 4567 • <a href="mailto:private-clients@hampsteadarchitects.com" style="color: #3D5A58;">private-clients@hampsteadarchitects.com</a></p>
+              <p style="margin: 0 0 10px 0;"><strong>Unit 3, Palace Court</strong><br>250 Finchley Road, London NW3 6DN</p>
+              <p style="margin: 0 0 10px 0;">020 8054 8756 • <a href="mailto:private-clients@hampsteadarchitects.com" style="color: #3D5A58;">private-clients@hampsteadarchitects.com</a></p>
               <p style="margin: 15px 0 0 0; font-size: 11px; color: #999;">🤖 Generated with <a href="https://claude.com/claude-code" style="color: #999;">Claude Code</a></p>
             </div>
           </body>
@@ -165,9 +165,9 @@ Best regards,
 The Studio at Palace Court
 Hampstead Architects & Interiors
 
-Palace Court
+Unit 3, Palace Court
 250 Finchley Road, London NW3 6DN
-020 7123 4567 • private-clients@hampsteadarchitects.com
+020 8054 8756 • private-clients@hampsteadarchitects.com
 
 🤖 Generated with Claude Code (https://claude.com/claude-code)
       `,
