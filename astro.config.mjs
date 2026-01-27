@@ -5,9 +5,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/design',
   integrations: [tailwind(), preact(), sitemap()],
-  site: 'https://hampsteadrenovations.co.uk',
+  site: 'https://hampsteadarchitects.vercel.app', // Update with your custom domain once configured
   output: 'static',
   compressHTML: true,
   build: {
