@@ -120,7 +120,7 @@ export default function InquiryWizard() {
       window.location.href = `/inquiry-success?${params.toString()}`;
     } catch (error) {
       console.error('Error submitting inquiry:', error);
-      alert('There was an error submitting your inquiry. Please try again or contact us directly at hello@hampsteadrenovations.co.uk');
+      alert('There was an error submitting your inquiry. Please try again or contact us directly at contact@hampsteadrenovations.co.uk');
     }
   };
 
